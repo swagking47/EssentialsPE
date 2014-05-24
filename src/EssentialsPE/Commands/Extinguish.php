@@ -1,17 +1,18 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use pocketmine\command\Command;
+use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
-use pocketmine\command\defaults\PluginsCommand;
+use EssentialsPE\Loader;
 
-class Extinguish extends Command{
-    public function __construct() {
+class Extinguish extends BaseCommand{
+    public function __construct(Loader $plugin) {
         parent::__construct("extinguish", "Extinguish a player", "/extinguish <player>", ["ex"]);
         $this->setPermission("essentials.extinguish");
+        $this->plugin = $plugin;
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {

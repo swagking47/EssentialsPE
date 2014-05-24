@@ -1,16 +1,18 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use pocketmine\command\Command;
+use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use EssentialsPE\Loader;
 
-class Heal extends Command{
-    public function __construct() {
+class Heal extends BaseCommand{
+    public function __construct(Loader $plugin) {
         parent::__construct("heal", "Heal yourself or other players", "/heal [player]");
         $this->setPermission("essentials.heal");
+        $this->plugin = $plugin;
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {

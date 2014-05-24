@@ -1,15 +1,18 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use pocketmine\command\Command;
+use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
+use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use EssentialsPE\Loader;
 
-class Burn extends Command{
-    public function __construct() {
+class Burn extends BaseCommand{
+    public function __construct(Loader $plugin) {
         parent::__construct("burn", "Set any player on fire!", "/burn <player> <seconds>");
         $this->setPermission("essentials.burn");
+        $this->plugin = $plugin;
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {
@@ -22,13 +25,14 @@ class Burn extends Command{
                 $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
                 break;
             case 2:
-                if(!$args[0] instanceof Player){
+                $player = Server::getInstance()->getPlayer($args[0]);
+                if($player == false){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{
                     if(!is_numeric($args[1])){
                         $sender->sendMessage(TextFormat::RED . "[Error] Invalid numbers.");
                     }else{
-                        $args[0]->setOnFire($args[1]);
+                        $player->setOnFire($args[1]);
                         $sender->sendMessage(TextFormat::YELLOW . "Player is now on fire!");
                     }
                 }

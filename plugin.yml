@@ -14,7 +14,7 @@ permissions:
                 description: "Toggle AFK Mode"
             essentials.back:
                 default: op
-                description: "Return to your las position"
+                description: "Return to your last position"
                 children:
                     essentials.back.use:
                         default: op
@@ -36,14 +36,14 @@ permissions:
                 description: "Extinguish a player"
             essentials.getpos:
                 default: op
-                description: "Get any player position"
+                description: "Get any player's position"
                 children:
                     essentials.getpos.use:
                         default: true
                         description: "Get your curren position"
                     essentials.getpos.other:
                         default: op
-                        description: "Get other player position"
+                        description: "Get other player's position"
             essentials.god:
                 default: op
                 description: "Toggle God Mode"
@@ -76,7 +76,7 @@ permissions:
                         description: "Multiple homes"
             essentials.more:
                 default: op
-                description: "Get a stack of the item you hold"
+                description: "Get a stack of the item you're holding"
             essentials.mute:
                 default: op
                 description: "Mute a player"
@@ -102,16 +102,16 @@ permissions:
                 description: "Toggle PvP on/off"
             essentials.realname:
                 default: op
-                description: "See a player realname"
+                description: "See a player's realname"
             essentials.repair:
                 default: op
                 description: "Repair the item you're holding"
             essentials.seen:
                 default: op
-                description: "Check a player las online time"
+                description: "Check player's last online time"
             essentials.setspawn:
                 default: op
-                description: "Change your server general spawn"
+                description: "Change your server's general spawn"
             essentials.tp:
                 default: op
                 description: "Some awesome teleport commands"

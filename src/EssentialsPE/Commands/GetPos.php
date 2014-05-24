@@ -1,16 +1,18 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use pocketmine\command\Command;
+use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use EssentialsPE\Loader;
 
-class GetPos extends Command{
-    public function __construct() {
+class GetPos extends BaseCommand{
+    public function __construct(Loader $plugin) {
         parent::__construct("getpos", "Get your current coords and world", "/getpos [player]", ["coords", "position", "pos", "whereami", "getlocation", "getloc"]);
         $this->setPermission("essentials.getpos");
+        $this->plugin = $plugin;
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {

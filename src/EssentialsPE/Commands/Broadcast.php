@@ -1,15 +1,17 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use pocketmine\command\Command;
+use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use EssentialsPE\Loader;
 
-class Broadcast extends Command{
-    public function __construct() {
+class Broadcast extends BaseCommand{
+    public function __construct(Loader $plugin) {
         parent::__construct("broadcast", "Send a message to all the players", "/broadcast <message> [permission]", ["bcast"]);
         $this->setPermission("essentials.broadcast");
+        $this->plugin = $plugin;
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {

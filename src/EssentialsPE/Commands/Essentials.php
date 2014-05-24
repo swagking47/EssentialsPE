@@ -1,16 +1,17 @@
 <?php
-
 namespace EssentialsPE\Commands;
 
-use pocketmine\command\Command;
+use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use EssentialsPE\Loader;
 
-class Essentials extends Command{
-    public function __construct() {
+class Essentials extends BaseCommand{
+    public function __construct(Loader $plugin) {
         parent::__construct("essentials", "Get the current Essentials version", "/essentials", ["ess"]);
         $this->setPermission("essentials.version");
+        $this->plugin = $plugin;
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {

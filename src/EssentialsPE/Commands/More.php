@@ -1,17 +1,19 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use pocketmine\command\Command;
+use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use EssentialsPE\Loader;
 
-class More extends Command{
-    public function __construct() {
+class More extends BaseCommand{
+    public function __construct(Loader $plugin) {
         parent::__construct("more", "Get more of the item you hold", "/more");
         $this->setPermission("essentials.more");
+        $this->plugin = $plugin;
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {
@@ -22,7 +24,7 @@ class More extends Command{
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
         }else{
             $item = Item::get($sender->getCurrentEquipmentSlot());
-            $item->setCount(64);
+            $item->setCount($item->getMaxStackSize());
             $sender->setSlot($sender->getCurrentEquipmentSlot(), $item);
         }
     }
