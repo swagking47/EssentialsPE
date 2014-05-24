@@ -14,6 +14,7 @@ class Burn extends Command{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         switch(count($args)){
             case 0:
@@ -21,7 +22,7 @@ class Burn extends Command{
                 $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
                 break;
             case 2:
-                if(!($args[0] instanceof Player)){
+                if(!$args[0] instanceof Player){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{
                     if(!is_numeric($args[1])){

@@ -21,6 +21,7 @@ class TPAAll extends Command{
     
     public function execute(CommandSender $sender, $commandLabel, string $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         if(!$sender instanceof Player){
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");

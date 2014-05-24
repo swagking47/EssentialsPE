@@ -15,6 +15,7 @@ class Nick extends Command{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         switch(count($args)){
             case 0:

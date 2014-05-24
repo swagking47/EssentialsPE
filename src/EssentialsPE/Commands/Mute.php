@@ -6,29 +6,30 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
-use pocketmine\utils\Config;
+use EssentialsPE\API\Sessions;
 
 class Mute extends Command{
-    public $file;
+    public $sessions;
     
     /** @return Mute */
     public static function get(Player $player){
-        return $this->file->get($player);
+        return $this->sessions[$player];
     }
     
     public static function set(Player $player){
-        return $this->file->set($player);
+        return $this->sessions[$player];
     }
 
     public function __construct() {
         parent::__construct("mute", "Mute/unmute a player", "/mute <player>", ["silence"]);
         $this->setPermission("essentials.mute.use");
         
-        $this->file = new Config("plugins/Essentials/Mutes.txt", Config::ENUM);
+        $this->file = new Sessions();
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         if(count($args) == 0 || count($args) > 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
