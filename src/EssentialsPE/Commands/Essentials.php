@@ -18,7 +18,7 @@ class Essentials extends BaseCommand{
         if(!$this->testPermission($sender)){
             return false;
         }
-        $sender->sendMessage(TextFormat::YELLOW . "You're using " . TextFormat::GREEN . "EssentialsPE v" . Server::getInstance()->getPluginManager()->getPlugin("EssentialsPE")->getDescription()->getVersion());
+        $sender->sendMessage(TextFormat::YELLOW . "You're using " . TextFormat::AQUA . "EssentialsPE v" . Server::getInstance()->getPluginManager()->getPlugin("EssentialsPE")->getDescription()->getVersion());
         return true;
     }
 }

@@ -34,21 +34,7 @@ class Loader extends PluginBase implements Listener{
     
     public function onEnable() {
         Server::getInstance()->getPluginManager()->registerEvents($this, $this);
-        
-        $fallbackPrefix = "essentials";
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Broadcast($this));
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Burn($this));
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Essentials($this));
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Extinguish($this));
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new GetPos($this));
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Heal($this));
-        //Server::getInstance()->getCommandMap()->register($fallbackPrefix, new More($this)); //Work in Progress, this may not work has desired :P
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Nick($this));
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new RealName($this));
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Repair($this)); //Work in Progress, this may not work has desired :P
-        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Seen($this));
-        //Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Setspawn($this));  //Work in Progress, this may not work has desired :P
-        
+        $this->registerCommands();
     }
     
     /**
@@ -85,5 +71,21 @@ class Loader extends PluginBase implements Listener{
      * @ignoreCancelled false
      */
     public function onPlayerQuit(PlayerQuitEvent $event){
+    }
+    
+    public function registerCommands(){
+        $fallbackPrefix = "essentials";
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Broadcast($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Burn($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Essentials($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Extinguish($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new GetPos($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Heal($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new More($this)); //Work in Progress, this may not work has desired :P
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Nick($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new RealName($this));
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Repair($this)); //Work in Progress, this may not work has desired :P
+        Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Seen($this));
+        //Server::getInstance()->getCommandMap()->register($fallbackPrefix, new Setspawn($this));  //Work in Progress, this may not work has desired :P
     }
 }

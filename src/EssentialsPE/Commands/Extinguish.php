@@ -28,11 +28,12 @@ class Extinguish extends BaseCommand{
                     $sender->sendMessage(TextFormat::AQUA . "Extinguished!");
                 }
             case 1:
-                if(!($args[0] instanceof Player)){
+                $player = Server::getInstance()->getPlayer($args[0]);
+                if(!$player instanceof Player){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{
-                    $args[0]->extinguish();
-                    $sender->sendMessage(TextFormat::AQUA . "Player extinguished!");
+                    $player->extinguish();
+                    $sender->sendMessage(TextFormat::AQUA . "$args[0] extinguished!");
                 }
                 break;
         }

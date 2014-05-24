@@ -28,7 +28,7 @@ class GetPos extends BaseCommand{
                         $sender->sendMessage(TextFormat::RED . "You don't have permissions to use this command.");
                     }else{
                         $pos = $sender->getPosition();
-                        $sender->sendMessage(TextFormat::GREEN . "You're in world: " . TextFormat::AQUA . $pos->level . TextFormat::GREEN . "\nYour Coordinates are:\nX: " . TextFormat::AQUA . $pos->x . TextFormat::GREEN . ", Y: " . TextFormat::AQUA . $pos->y . TextFormat::GREEN . ", Z: " . TextFormat::AQUA . $pos->z);
+                        $sender->sendMessage(TextFormat::GREEN . "You're in world: " . TextFormat::AQUA . $pos->getLevel() . "\n" . TextFormat::GREEN . "Your Coordinates are: X: " . TextFormat::AQUA . floor($pos->x) . TextFormat::GREEN . ", Y: " . TextFormat::AQUA . floor($pos->y) . TextFormat::GREEN . ", Z: " . TextFormat::AQUA . floor($pos->z));
                     }
                 }
                 break;
@@ -36,11 +36,12 @@ class GetPos extends BaseCommand{
                 if(!$sender->hasPermission("essentials.getpos.other")){
                     $sender->sendMessage(TextFormat::RED . "You don't have permissions to use this command.");
                 }else{
-                    if(!$args[0] instanceof Player){
+                    $player = Server::getInstance()->getPlayer($args[0]);
+                    if(!$player instanceof Player){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{
-                        $pos = $args[0]->getPosition();
-                        $sender->sendMessage(TextFormat::GREEN . "$args[0] is on world: " . TextFormat::AQUA . $pos->level . TextFormat::GREEN . "\nCoordinates:\nX: " . TextFormat::AQUA . $pos->x . TextFormat::GREEN . ", Y: " . TextFormat::AQUA . $pos->y . TextFormat::GREEN . ", Z: " . TextFormat::AQUA . $pos->z);
+                        $pos = $player->getPosition();
+                        $sender->sendMessage(TextFormat::YELLOW . "$args[0]" . TextFormat::GREEN . " is in world: " . TextFormat::AQUA . $pos->getLevel() . "\n" . TextFormat::GREEN . "Coordinates: X: " . TextFormat::AQUA . floor($pos->x) . TextFormat::GREEN . ", Y: " . TextFormat::AQUA . floor($pos->y) . TextFormat::GREEN . ", Z: " . TextFormat::AQUA . floor($pos->z));
                     }
                 }
                 break;

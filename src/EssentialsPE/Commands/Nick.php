@@ -40,7 +40,7 @@ class Nick extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . "You don't have permissions to use this command.");
                 }else{
                     $player = Server::getInstance()->getPlayer($args[1]);
-                    if($player == false){
+                    if(!$player instanceof Player){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found");
                     }else{
                         $player->setDisplayName("$args[0]");

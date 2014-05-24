@@ -26,14 +26,14 @@ class Burn extends BaseCommand{
                 break;
             case 2:
                 $player = Server::getInstance()->getPlayer($args[0]);
-                if($player == false){
+                if(!$player instanceof Player){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{
                     if(!is_numeric($args[1])){
                         $sender->sendMessage(TextFormat::RED . "[Error] Invalid numbers.");
                     }else{
-                        $player->setOnFire($args[1]);
-                        $sender->sendMessage(TextFormat::YELLOW . "Player is now on fire!");
+                        $player->setOnFire($player);
+                        $sender->sendMessage(TextFormat::YELLOW . "$args[0] is now on fire!");
                     }
                 }
         }
