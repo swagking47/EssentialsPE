@@ -40,7 +40,7 @@ class Loader extends PluginBase implements Listener{
     /**
      * @param PlayerChatEvent $event
      * 
-     * @priority HIGH
+     * @priority NORMAL
      * @ignoreCancelled false
      */
     public function onPlayerChat(PlayerChatEvent $event){
@@ -58,7 +58,7 @@ class Loader extends PluginBase implements Listener{
     /**
      * @param PlayerJoinEvent $event
      * 
-     * @priority HIGH
+     * @priority LOW
      * @ignoreCancelled false
      */
     public function onPlayerJoin(PlayerJoinEvent $event){
@@ -67,7 +67,7 @@ class Loader extends PluginBase implements Listener{
     /**
      * @param PlayerQuitEvent $event
      * 
-     * @priority HIGH
+     * @priority LOW
      * @ignoreCancelled false
      */
     public function onPlayerQuit(PlayerQuitEvent $event){
