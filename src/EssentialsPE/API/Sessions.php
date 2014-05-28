@@ -16,7 +16,7 @@ class Sessions {
         $this->sessions[$player] = $this->default;
     }
 
-    public function remove($player){
+    public function remove(Player $player){
         if(!isset($this->sessions[$player])){
             return false;
         }else{
