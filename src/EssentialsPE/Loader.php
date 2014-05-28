@@ -40,7 +40,7 @@ class Loader extends PluginBase implements Listener{
     /**
      * @param PlayerChatEvent $event
      * 
-     * @priority NORAML
+     * @priority NORMAL
      */
     public function onPlayerChat(PlayerChatEvent $event){
         if(strstr($event->getMessage(), "&") != false){
