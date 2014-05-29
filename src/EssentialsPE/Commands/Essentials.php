@@ -10,7 +10,7 @@ use EssentialsPE\Loader;
 class Essentials extends BaseCommand{
     public function __construct(Loader $plugin) {
         parent::__construct("essentials", "Get the current Essentials version", "/essentials", ["ess"]);
-        $this->setPermission("essentials.version");
+        $this->setPermission("essentials.essentials");
         $this->plugin = $plugin;
     }
     
