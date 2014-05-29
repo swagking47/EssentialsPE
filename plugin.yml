@@ -9,19 +9,6 @@ permissions:
         default: op
         description: "All the Essentials' features"
         children:
-            essentials.afk:
-                default: op
-                description: "Toggle AFK Mode"
-            essentials.back:
-                default: op
-                description: "Return to your last position"
-                children:
-                    essentials.back.use:
-                        default: op
-                        description: "Return to your last position"
-                    essentials.back.ondeath:
-                        default: op
-                        description: "Return to your death position"
             essentials.broadcast:
                 default: op
                 description: "Broadcast a message"
@@ -31,6 +18,9 @@ permissions:
             essentials.colorchat:
                 default: op
                 description: "Allow the player to talk with colored messages"
+            essentials.essentials:
+                default: op
+                description: "See the current Essentials version"
             essentials.extinguish:
                 default: op
                 description: "Extinguish a player"
@@ -44,16 +34,6 @@ permissions:
                     essentials.getpos.other:
                         default: op
                         description: "Get other player's position"
-            essentials.god:
-                default: op
-                description: "Toggle God Mode"
-                children:
-                    essentials.god.use:
-                        default: op
-                        description: "Switch god mode for yourself"
-                    essentials.god.other:
-                        default: op
-                        description: "Switch god mode for other players"
             essentials.heal:
                 default: op
                 description: "Heal yourself or other players"
@@ -64,29 +44,9 @@ permissions:
                     essentials.heal.other:
                         default: op
                         description: "Heal other players"
-            essentials.home:
-                default: op
-                description: "Tp or set a new home"
-                children:
-                    essentials.home.use:
-                        default: true
-                        description: "TP or set a new home"
-                    essentials.home.multiple:
-                        default: op
-                        description: "Multiple homes"
             essentials.more:
                 default: op
                 description: "Get a stack of the item you're holding"
-            essentials.mute:
-                default: op
-                description: "Mute a player"
-                children:
-                    essentials.mute.use:
-                        default: op
-                        description: "Mute a player"
-                    essentials.mute.exempt:
-                        default: op
-                        description: "Prevent the player from being muted"
             essentials.nick:
                 default: op
                 description: "Change your or others name"
@@ -97,9 +57,6 @@ permissions:
                     essentials.nick.other:
                         default: op
                         desctiption: "Change others name"
-            essentials.pvp:
-                default: true
-                description: "Toggle PvP on/off"
             essentials.realname:
                 default: op
                 description: "See a player's realname"
@@ -112,38 +69,3 @@ permissions:
             essentials.setspawn:
                 default: op
                 description: "Change your server's general spawn"
-            essentials.tp:
-                default: op
-                description: "Some awesome teleport commands"
-                children:
-                    essentials.tp.tpall:
-                        default: op
-                        description: "Teleport everyone to you"
-                    essentials.tp.tphere:
-                        default: op
-                        description: "Teleport a player to you"
-                    essentials.tp.requests:
-                        default: op
-                        description: "Teleport Requests"
-                        children:
-                            essentials.tp.requests.tpa:
-                                default: true
-                                description: "Make a teleport request"
-                            essentials.tp.requests.tpaall:
-                                default: op
-                                description: "Request a tp to you to all the players"
-                            essentials.tp.requests.tpahere:
-                                default: true
-                                description: "Make a teleport to you request"
-                            essentials.tp.requests.tpaccept:
-                                default: true
-                                description: "Accept a teleport request"
-                            essentials.tp.requests.tpdeny:
-                                default: true
-                                deacription: "Ignore a teleport request"
-            essentials.vanish:
-                default: op
-                description: "Hide yourself"
-            essentials.version:
-                default: op
-                description: "See the current Essentials version"
