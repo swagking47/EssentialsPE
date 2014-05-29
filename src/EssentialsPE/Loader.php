@@ -2,8 +2,6 @@
 namespace EssentialsPE;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
@@ -22,13 +20,13 @@ use EssentialsPE\Commands\Setspawn;
 
 //Events:
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 
 class Loader extends PluginBase implements Listener{
     public function onLoad() {
-        console(TextFormat::YELLOW . "Loading EssentialsPE plugin...");
+        $this->getLogger()->info(TextFormat::YELLOW . "Loading...");
         @mkdir("plugins/Essentials/");
     }
     
@@ -36,17 +34,18 @@ class Loader extends PluginBase implements Listener{
         Server::getInstance()->getPluginManager()->registerEvents($this, $this);
         $this->registerCommands();
     }
-    
+
     /**
-     * @param PlayerChatEvent $event
+     * @param PlayerCommandPreprocessEvent $event
      */
-    public function onPlayerChat(PlayerChatEvent $event){
+    //TODO Colored chat for "/say" (Console)
+    public function onPlayerChat(PlayerCommandPreprocessEvent $event){
         if(strstr($event->getMessage(), "&") != false){
             if(!$event->getPlayer()->hasPermission("essentials.colorchat")){
                 $event->setCancelled();
                 $event->getPlayer()->sendMessage(TextFormat::RED . "You can't chat in color.");
             }else{
-                $message = str_replace("&", "§", $event->getMessage()); //TODO Implement this with /say and /me
+                $message = str_replace("&", "§", $event->getMessage());
                 $event->setMessage($message);
             }
         }
