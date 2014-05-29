@@ -39,8 +39,6 @@ class Loader extends PluginBase implements Listener{
     
     /**
      * @param PlayerChatEvent $event
-     * 
-     * @priority NORMAL
      */
     public function onPlayerChat(PlayerChatEvent $event){
         if(strstr($event->getMessage(), "&") != false){
@@ -48,7 +46,7 @@ class Loader extends PluginBase implements Listener{
                 $event->setCancelled();
                 $event->getPlayer()->sendMessage(TextFormat::RED . "You can't chat in color.");
             }else{
-                $message = str_replace("&", "§", $event->getMessage()); //TODO Implement this with /say
+                $message = str_replace("&", "§", $event->getMessage()); //TODO Implement this with /say and /me
                 $event->setMessage($message);
             }
         }
@@ -59,16 +57,14 @@ class Loader extends PluginBase implements Listener{
      * 
      * @priority LOW
      */
-    public function onPlayerJoin(PlayerJoinEvent $event){
-    }
+    public function onPlayerJoin(PlayerJoinEvent $event){}
     
     /**
      * @param PlayerQuitEvent $event
      * 
      * @priority LOW
      */
-    public function onPlayerQuit(PlayerQuitEvent $event){
-    }
+    public function onPlayerQuit(PlayerQuitEvent $event){}
     
     public function registerCommands(){
         $fallbackPrefix = "essentials";
