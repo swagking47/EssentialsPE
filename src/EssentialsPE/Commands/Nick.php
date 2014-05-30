@@ -3,16 +3,23 @@ namespace EssentialsPE\Commands;
 
 use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
+use pocketmine\event\Listener;
 use pocketmine\Player;
 use pocketmine\Server;
+use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use EssentialsPE\Loader;
 
-class Nick extends BaseCommand{
+class Nick extends BaseCommand implements Listener{
+    public static $instance;
+    public $config;
+
     public function __construct(Loader $plugin) {
+        self::$instance = $this;
         parent::__construct("nick", "Change your name", "/nick <nick> [player]", ["nickname"]);
         $this->setPermission("essentials.nick.use");
         $this->plugin = $plugin;
+        $this->config = new Config("plugins/Essentials/Nicknames.yml", Config::YAML);
     }
     
     public function execute(CommandSender $sender, $alias, array $args) {
@@ -46,5 +53,15 @@ class Nick extends BaseCommand{
                     break;
             }
         }
+        $this->save();
+    }
+
+    private function save(){
+        foreach(Server::getInstance()->getOnlinePlayers() as $p){
+            if($p->getName() != $p->getDisplayName()){
+                $this->config->set($p->getName(), $p->getDisplayName());
+            }
+        }
+        $this->config->save();
     }
 }

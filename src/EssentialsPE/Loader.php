@@ -33,7 +33,8 @@ class Loader extends PluginBase implements Listener{
     }
     
     public function onEnable() {
-        Server::getInstance()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getPluginManager()->registerEvents(new Nick(), $this);
         $this->registerCommands();
     }
 
@@ -58,7 +59,9 @@ class Loader extends PluginBase implements Listener{
      * @priority HIGHEST
      */
     public function onPlayerJoin(PlayerJoinEvent $event){
-        //Sessions::getInstance()->create($event->getPlayer());
+        if(Nick::$instance->config->exists($event->getPlayer()->getName())){
+            $event->getPlayer()->setDisplayName(Nick::$instance->config->get($event->getPlayer()->getName()));
+        }
     }
     
     /**
