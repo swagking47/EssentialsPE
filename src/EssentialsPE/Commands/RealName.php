@@ -17,7 +17,6 @@ class RealName extends BaseCommand{
     
     public function execute(CommandSender $sender, $alias, array $args){
         if(!$this->testPermission($sender)){
-            return false;
         }
         if(count($args) == 0 || count($args) > 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());

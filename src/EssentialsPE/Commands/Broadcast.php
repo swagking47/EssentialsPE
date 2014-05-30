@@ -16,7 +16,6 @@ class Broadcast extends BaseCommand{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
-            return false;
         }
         if(count($args) == 0){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());

@@ -17,7 +17,6 @@ class Seen extends BaseCommand{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
-            return false;
         }
         if(count($args) == 0 || count($args) > 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
@@ -28,10 +27,6 @@ class Seen extends BaseCommand{
                 if(!is_numeric(Server::getInstance()->getOfflinePlayer($args[0])->getLastPlayed())){
                     $sender->sendMessage(TextFormat::RED . "$args[0] never played on this server.");
                 }else{
-                    $hour = "g";
-                    $minute = "i";
-                    $am_pm = "a";
-                    
                     $player = Server::getInstance()->getOfflinePlayer($args[0])->getLastPlayed();
                     $current = time();
                     if(date("Y", $player) == date("Y", $current)){ //Year (Ex. "2014")
