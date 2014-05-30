@@ -16,20 +16,30 @@ class RealName extends BaseCommand{
     }
     
     public function execute(CommandSender $sender, $alias, array $args){
-        if(!$this->testPermission($sender)){
+        if($this->testPermission($sender)){
         }
         if(count($args) == 0 || count($args) > 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
-            $player = Server::getInstance()->getPlayer($args[0]);
-            if(!$player instanceof Player){
-                $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
-            }else{
+            $player = $this->getPlayer($args[0]);
+            if($player != false){
                 if(substr($args[0], -1, 1) != "s"){
-                    $sender->sendMessage(TextFormat::YELLOW . "$args[0]'s real name is: " . TextFormat::AQUA . $player->getName());
+                    $sender->sendMessage(TextFormat::YELLOW . "$args[0]'s real name is: " . TextFormat::RESET . $player);
                 }else{
-                    $sender->sendMessage(TextFormat::YELLOW . "$args[0]' real name is: " . TextFormat::AQUA . $player->getName());
+                    $sender->sendMessage(TextFormat::YELLOW . "$args[0]' real name is: " . TextFormat::RESET . $player);
                 }
+            }else{
+                $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
+            }
+        }
+    }
+
+    private function getPlayer($alias){
+        foreach(Server::getInstance()->getOnlinePlayers() as $p){
+            if($p->getDisplayName() == $alias){
+                return $p->getName();
+            }else{
+                return false;
             }
         }
     }
