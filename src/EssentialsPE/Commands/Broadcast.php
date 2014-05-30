@@ -9,7 +9,7 @@ use EssentialsPE\Loader;
 
 class Broadcast extends BaseCommand{
     public function __construct(Loader $plugin) {
-        parent::__construct("broadcast", "Send a message to all the players", "/broadcast <message> [permission]", ["bcast"]);
+        parent::__construct("broadcast", "Send a message to all the players", "/broadcast <message> [p:permission]", ["bcast"]);
         $this->setPermission("essentials.broadcast");
         $this->plugin = $plugin;
     }
