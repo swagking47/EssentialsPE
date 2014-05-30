@@ -34,7 +34,6 @@ class Loader extends PluginBase implements Listener{
     
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getServer()->getPluginManager()->registerEvents(new Nick(), $this);
         $this->registerCommands();
     }
 
@@ -85,7 +84,7 @@ class Loader extends PluginBase implements Listener{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Heal($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new More($this));
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Mute($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Nick($this)); //TODO Save nicknames into files
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Nick($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new RealName($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Repair($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Seen($this));

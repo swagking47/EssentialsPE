@@ -20,7 +20,7 @@ class Nick extends BaseCommand{
         $this->plugin = $plugin;
         $this->config = new Config("plugins/Essentials/Nicknames.yml", Config::YAML);
     }
-    
+
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
         }
