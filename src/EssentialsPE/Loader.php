@@ -2,7 +2,6 @@
 namespace EssentialsPE;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
 use EssentialsPE\Commands\Broadcast;
@@ -66,13 +65,9 @@ class Loader extends PluginBase implements Listener{
     /**
      * @param PlayerQuitEvent $event
      * 
-     * @priority HIGHEST
+     * @priority LOWEST
      */
-    public function onPlayerQuit(PlayerQuitEvent $event){
-        /*if(isset(Sessions::getInstance()->sessions[$event->getPlayer()])){
-            unset(Sessions::getInstance()->sessions[$event->getPlayer()]);
-        }*/
-    }
+    public function onPlayerQuit(PlayerQuitEvent $event){/*if(isset(Sessions::getInstance()->sessions[$event->getPlayer()])){unset(Sessions::getInstance()->sessions[$event->getPlayer()]);}*/}
     
     public function registerCommands(){
         $fallbackPrefix = "essentials";
