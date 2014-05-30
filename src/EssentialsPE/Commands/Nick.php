@@ -3,14 +3,13 @@ namespace EssentialsPE\Commands;
 
 use EssentialsPE\BaseCommand;
 use pocketmine\command\CommandSender;
-use pocketmine\event\Listener;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use EssentialsPE\Loader;
 
-class Nick extends BaseCommand implements Listener{
+class Nick extends BaseCommand{
     public static $instance;
     public $config;
 
