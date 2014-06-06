@@ -24,7 +24,7 @@ class Heal extends BaseCommand{
                     if(!($sender instanceof Player)){
                         $sender->sendMessage(TextFormat::RED . "Usage: /heal <player>");
                     }else{
-                        $sender->setHealth(20);
+                        $sender->setHealth($sender->getMaxHealth());
                         $sender->sendMessage(TextFormat::GREEN . "You have been healed!");
                     }
                     return true;
@@ -37,7 +37,7 @@ class Heal extends BaseCommand{
                 if($sender->hasPermission("essentials.heal.other")){
                     $player = Server::getInstance()->getPlayer($args[0]);
                     if($player instanceof Player && $player->isOnline()){
-                        $player->setHealth(20);
+                        $player->setHealth($player->getMaxHealth());
                         $player->sendMessage("You have been healed!");
                         $sender->sendMessage("$args[0] has been healed!");
                     }else{
