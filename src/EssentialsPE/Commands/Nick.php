@@ -25,7 +25,11 @@ class Nick extends BaseCommand{
         if(!$this->testPermission($sender)){
         }
         if(count($args) == 0 || count($args) > 2){
-            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            if(!$this->isPlayer($sender)){
+                $sender->sendMessage(TextFormat::RED . "Usage: /nick <nick> <player>");
+            }else{
+                $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            }
         }else{
             switch(count($args)){
                 case 1:
@@ -38,7 +42,9 @@ class Nick extends BaseCommand{
                     break;
                 case 2:
                     $player = Server::getInstance()->getPlayer($args[1]);
-                    if($player instanceof Player && $player->isOnline()){
+                    if(!$this->isPlayer($player)){
+                        $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
+                    }else{
                         $player->setDisplayName($args[0]);
                         $player->sendMessage(TextFormat::YELLOW . "Your nick is now: " . TextFormat::RESET . $args[0]);
                         if(substr($player->getName(), -1, 1) != "s"){
@@ -46,8 +52,6 @@ class Nick extends BaseCommand{
                         }else{
                             $sender->sendMessage(TextFormat::GREEN . $player->getName() . "' nick changed to $args[0]");
                         }
-                    }else{
-                        $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }
                     break;
             }

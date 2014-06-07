@@ -24,6 +24,13 @@ permissions:
             essentials.extinguish:
                 default: op
                 description: "Extinguish a player"
+                children:
+                  essentials.extinguish.use:
+                    default: op
+                    description: "Extinguish yourslef"
+                  essentials.extinguish.other:
+                    default: op
+                    description: "Extinguish other players"
             essentials.getpos:
                 default: op
                 description: "Get any player's position"

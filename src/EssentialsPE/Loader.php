@@ -1,6 +1,7 @@
 <?php
 namespace EssentialsPE;
 
+use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 
@@ -37,10 +38,10 @@ class Loader extends PluginBase implements Listener{
     }
 
     /**
-     * @param PlayerCommandPreprocessEvent $event
+     * @param PlayerChatEvent $event
      */
-    //TODO Colored chat for "/me" and "/say" (Console)
-    public function onPlayerChat(PlayerCommandPreprocessEvent $event){
+    //TODO Colored chat for commands...
+    public function onPlayerChat(PlayerChatEvent $event){
         if(strstr($event->getMessage(), "&") != false){
             if(!$event->getPlayer()->hasPermission("essentials.colorchat")){
                 $event->setCancelled();

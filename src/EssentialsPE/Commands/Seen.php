@@ -18,10 +18,11 @@ class Seen extends BaseCommand{
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
         }
-        if(count($args) == 0 || count($args) > 1){
+        if(count($args) != 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
-            if($args[0] instanceof Player){
+            $player = Server::getInstance()->getPlayer($args[0]);
+            if($this->isPlayer($player)){
                 $sender->sendMessage(TextFormat::GREEN . "$args[0] is online!");
             }else{
                 if(!is_numeric(Server::getInstance()->getOfflinePlayer($args[0])->getLastPlayed())){
