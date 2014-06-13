@@ -51,6 +51,9 @@ permissions:
                     essentials.heal.other:
                         default: op
                         description: "Heal other players"
+            essentials.kickall:
+              default: op
+              description: "Kick all the online players except the sender"
             essentials.more:
                 default: op
                 description: "Get a stack of the item you're holding"

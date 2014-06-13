@@ -23,9 +23,10 @@ class Nick extends BaseCommand{
 
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         if(count($args) == 0 || count($args) > 2){
-            if(!$this->isPlayer($sender)){
+            if(!$sender instanceof Player){
                 $sender->sendMessage(TextFormat::RED . "Usage: /nick <nick> <player>");
             }else{
                 $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
@@ -41,8 +42,8 @@ class Nick extends BaseCommand{
                     }
                     break;
                 case 2:
-                    $player = Server::getInstance()->getPlayer($args[1]);
-                    if(!$this->isPlayer($player)){
+                    $player = $this->getPlayer($args[1]);
+                    if($player == false){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{
                         $player->setDisplayName($args[0]);

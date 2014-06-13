@@ -17,6 +17,7 @@ class Heal extends BaseCommand{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         if(count($args) > 1){
             if(!$this->isPlayer($sender)){
@@ -38,13 +39,13 @@ class Heal extends BaseCommand{
                 if(!$sender->hasPermission("essentials.heal.other")){
                     $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                 }else{
-                    $player = Server::getInstance()->getPlayer($args[0]);
-                    if($this->isPlayer($player)){
+                    $player = $this->getPlayer($args[0]);
+                    if($player == false){
+                        $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
+                    }else{
                         $player->setHealth($player->getMaxHealth());
                         $player->sendMessage("You have been healed!");
                         $sender->sendMessage("$args[0] has been healed!");
-                    }else{
-                        $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }
                 }
                 break;

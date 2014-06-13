@@ -17,12 +17,13 @@ class Burn extends BaseCommand{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         if(count($args) != 2){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
-            $player = Server::getInstance()->getPlayer($args[0]);
-            if(!$this->isPlayer($player)){
+            $player = $this->getPlayer($args[0]);
+            if($player == false){
                 $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
             }else{
                 if(!is_numeric($args[1])){

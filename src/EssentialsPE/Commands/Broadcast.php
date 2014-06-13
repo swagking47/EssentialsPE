@@ -16,11 +16,13 @@ class Broadcast extends BaseCommand{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         if(count($args) == 0){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
-            $message = TextFormat::LIGHT_PURPLE . "[Broadcast] " . TextFormat::RESET . implode(" ", str_replace("&", "§", $args));
+            //TODO Colored messages...
+            $message = TextFormat::LIGHT_PURPLE . "[Broadcast] " . TextFormat::RESET . implode(" ",$args);
             if(stripos($message, "p:") != false){
                 $pos = stripos($message, "p:");
                 $permission = substr($message, $pos);

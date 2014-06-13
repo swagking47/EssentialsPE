@@ -21,13 +21,14 @@ class Setspawn extends BaseCommand{
     
     public function execute(CommandSender $sender, $alias, array $args) {
         if(!$this->testPermission($sender)){
+            return false;
         }
         if(!$sender instanceof Player){
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
         }else{
             $pos = $sender->getPosition();
             $pos->getLevel()->setSpawn($pos);
-            Server::getInstance()->setDefaultLevel($pos->level);
+            Server::getInstance()->setDefaultLevel($pos->getLevel()->getName());
             $sender->sendMessage(TextFormat::YELLOW . "Spawn changed!");
         }
     }
