@@ -2,9 +2,6 @@
 namespace EssentialsPE;
 
 use EssentialsPE\API\Sessions;
-use pocketmine\plugin\PluginBase;
-use pocketmine\utils\TextFormat;
-
 use EssentialsPE\Commands\Broadcast;
 use EssentialsPE\Commands\Burn;
 use EssentialsPE\Commands\ClearInventory;
@@ -19,74 +16,78 @@ use EssentialsPE\Commands\Nick;
 use EssentialsPE\Commands\RealName;
 use EssentialsPE\Commands\Repair;
 use EssentialsPE\Commands\Seen;
-use EssentialsPE\Commands\Setspawn;
+//use EssentialsPE\Commands\Setspawn;
 
 //Events:
+use pocketmine\plugin\PluginBase;
+use pocketmine\utils\TextFormat;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-//use EssentialsPE\API\Sessions;
 
 class Loader extends PluginBase implements Listener{
+	/** @var BaseCommand[] */
+	private $cmds = [];
+	/** @var Sessions */
+	private $sessions;
     public function onLoad() {
-        $this->getLogger()->info(TextFormat::YELLOW . "Loading...");
         @mkdir("plugins/Essentials/");
     }
-    
     public function onEnable() {
+	    $this->getLogger()->info(TextFormat::YELLOW . "Loading...");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
+	    $this->sessions = new Sessions();
         $this->registerCommands();
     }
-
     /**
      * @param PlayerChatEvent $event
      *
      * @priority HIGH
      */
     public function onPlayerChat(PlayerChatEvent $event){
-        if(Sessions::$instance->sessions[$event->getPlayer()->getName()]["mute"] == true){
+        if($this->sessions->sessions[$event->getPlayer()->getName()]["mute"] == true){
             $event->setCancelled();
         }
     }
-    
     /**
      * @param PlayerJoinEvent $event
      * 
      * @priority HIGH
      */
     public function onPlayerJoin(PlayerJoinEvent $event){
-        Sessions::$instance->sessions[$event->getPlayer()->getName()] = Sessions::$instance->default;
-        if(Nick::$instance->config->exists($event->getPlayer()->getName())){
-            $event->getPlayer()->setDisplayName(Nick::$instance->config->get($event->getPlayer()->getName()));
+        $this->sessions->sessions[$event->getPlayer()->getName()] = $this->sessions->default;
+        if($this->cmds["nick"]->config->exists($event->getPlayer()->getName())){
+            $event->getPlayer()->setDisplayName($this->cmds["nick"]->config->get($event->getPlayer()->getName()));
         }
     }
-    
     /**
      * @param PlayerQuitEvent $event
      */
     public function onPlayerQuit(PlayerQuitEvent $event){
-        if(isset(Sessions::$instance->sessions[$event->getPlayer()->getName()])){
-            unset(Sessions::$instance->sessions[$event->getPlayer()->getName()]);
+        if(isset($this->sessions->sessions[$event->getPlayer()->getName()])){
+            unset($this->sessions->sessions[$event->getPlayer()->getName()]);
         }
     }
-    
     public function registerCommands(){
         $fallbackPrefix = "essentials";
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Broadcast($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Burn($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new ClearInventory($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Essentials($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Extinguish($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new GetPos($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Heal($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Kickall($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new More($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Mute($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Nick($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new RealName($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Repair($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Seen($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["broadcast"] = new Broadcast($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["burn"] = new Burn($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["clearinventory"] = new ClearInventory($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["essentials"] = new Essentials($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["extinguish"] = new Extinguish($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["getpos"] = new GetPos($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["heal"] = new Heal($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["kickall"] = new Kickall($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["more"] = new More($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["mute"] = new Mute($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["nick"] = new Nick($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["realname"] = new RealName($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["repair"] = new Repair($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["seej"] = new Seen($this));
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Setspawn($this));  //Work in Progress, this may not work has desired :P
     }
+	public function getCommand($cmd){
+		return isset($this->cmds[$cmd]) ? $this->cmds[$cmd]:false;
+	}
 }
