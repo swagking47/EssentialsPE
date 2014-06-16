@@ -1,5 +1,4 @@
 <?php
-//NOTE: Spawn Changer doesn't work at the momment :P
 namespace EssentialsPE\Commands;
 
 use EssentialsPE\BaseCommand;

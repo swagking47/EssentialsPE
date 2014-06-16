@@ -9,7 +9,7 @@ use EssentialsPE\Commands\Essentials;
 use EssentialsPE\Commands\Extinguish;
 use EssentialsPE\Commands\GetPos;
 use EssentialsPE\Commands\Heal;
-use EssentialsPE\Commands\Kickall;
+use EssentialsPE\Commands\KickAll;
 use EssentialsPE\Commands\More;
 use EssentialsPE\Commands\Mute;
 use EssentialsPE\Commands\Nick;
@@ -19,6 +19,8 @@ use EssentialsPE\Commands\Seen;
 //use EssentialsPE\Commands\Setspawn;
 
 //Events:
+use EssentialsPE\Commands\Setspawn;
+use EssentialsPE\Commands\Vanish;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 use pocketmine\event\Listener;
@@ -78,14 +80,15 @@ class Loader extends PluginBase implements Listener{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["extinguish"] = new Extinguish($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["getpos"] = new GetPos($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["heal"] = new Heal($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["kickall"] = new Kickall($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["kickall"] = new KickAll($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["more"] = new More($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["mute"] = new Mute($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["nick"] = new Nick($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["mute"] = new Mute($this)); //Work in Progress...
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["nick"] = new Nick($this)); //Work in Progress...
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["realname"] = new RealName($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["repair"] = new Repair($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["seen"] = new Seen($this));
-        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Setspawn($this));  //Work in Progress, this may not work has desired :P
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["setspawn"] = new Setspawn($this));  //Work in Progress, this may not work has desired :P
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["vanish"] = new Vanish($this)); //Work in Progress...
     }
 	public function getCommand($cmd){
 		return isset($this->cmds[$cmd]) ? $this->cmds[$cmd]:false;
