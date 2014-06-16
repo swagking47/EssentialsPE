@@ -32,7 +32,7 @@ class Loader extends PluginBase implements Listener{
 	/** @var BaseCommand[] */
 	private $cmds = [];
 	/** @var Sessions */
-	private $sessions;
+	private $sessions = [];
     public function onLoad() {
         @mkdir("plugins/Essentials/");
     }
