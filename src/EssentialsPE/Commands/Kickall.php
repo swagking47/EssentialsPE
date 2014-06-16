@@ -7,7 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
-class Kickall extends BaseCommand{
+class KickAll extends BaseCommand{
     public function __construct(Loader $plugin){
         parent::__construct("kickall", "Kick all the players", "/kickall [reason]");
         $this->setPermission("essentials.kickall");
