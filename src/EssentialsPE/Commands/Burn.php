@@ -34,5 +34,6 @@ class Burn extends BaseCommand{
                 }
             }
         }
+        return true;
     }
 }

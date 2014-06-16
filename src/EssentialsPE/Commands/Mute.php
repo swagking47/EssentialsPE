@@ -50,5 +50,6 @@ class Mute extends BaseCommand{
             Sessions::$instance->sessions[$player->getName()]["mute"] = false;
             $sender->sendMessage(TextFormat::YELLOW . $player->getName() . " has been unmuted!");
         }
+        return true;
     }
 } 

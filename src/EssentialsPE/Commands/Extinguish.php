@@ -49,5 +49,6 @@ class Extinguish extends BaseCommand{
                 }
                 break;
         }
+        return true;
     }
 }

@@ -31,5 +31,6 @@ class RealName extends BaseCommand{
                 }
             }
         }
+        return true;
     }
 }

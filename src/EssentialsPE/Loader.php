@@ -84,7 +84,7 @@ class Loader extends PluginBase implements Listener{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["nick"] = new Nick($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["realname"] = new RealName($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["repair"] = new Repair($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["seej"] = new Seen($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, $this->cmds["seen"] = new Seen($this));
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Setspawn($this));  //Work in Progress, this may not work has desired :P
     }
 	public function getCommand($cmd){

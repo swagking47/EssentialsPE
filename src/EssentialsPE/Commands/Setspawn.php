@@ -27,9 +27,10 @@ class Setspawn extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
         }else{
             $pos = $sender->getPosition();
-            $pos->getLevel()->setSpawn($pos);
-            Server::getInstance()->setDefaultLevel($pos->getLevel()->getName());
+            $sender->getLevel()->setSpawn($pos);
+            Server::getInstance()->setDefaultLevel($sender->getLevel()->getName());
             $sender->sendMessage(TextFormat::YELLOW . "Spawn changed!");
         }
+        return true;
     }
 }

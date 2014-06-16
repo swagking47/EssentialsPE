@@ -28,5 +28,6 @@ class Repair extends BaseCommand{
             $item->setDamage(0);
             $inv->setItemInHand($item);
         }
+        return true;
     }
 }

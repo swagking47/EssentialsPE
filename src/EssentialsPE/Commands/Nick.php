@@ -10,9 +10,11 @@ use pocketmine\utils\TextFormat;
 use EssentialsPE\Loader;
 
 class Nick extends BaseCommand{
+    public static $instance;
     public $config;
 
     public function __construct(Loader $plugin) {
+        self::$instance = $this;
         parent::__construct("nick", "Change your name", "/nick <nick> [player]", ["nickname"]);
         $this->setPermission("essentials.nick.use");
         $this->plugin = $plugin;
@@ -56,7 +58,6 @@ class Nick extends BaseCommand{
             }
         }
         $this->save();
-	    return true;
     }
 
     private function save(){

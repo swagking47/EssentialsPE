@@ -28,5 +28,6 @@ class More extends BaseCommand{
             $item->setCount($item->getMaxStackSize());
             $inv->setItemInHand($item);
         }
+        return true;
     }
 }

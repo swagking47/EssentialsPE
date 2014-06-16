@@ -50,5 +50,6 @@ class Heal extends BaseCommand{
                 }
                 break;
         }
+        return true;
     }
 }

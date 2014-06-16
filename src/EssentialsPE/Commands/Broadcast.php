@@ -32,5 +32,6 @@ class Broadcast extends BaseCommand{
                 Server::getInstance()->broadcastMessage($message);
             }
         }
+        return true;
     }
 }
