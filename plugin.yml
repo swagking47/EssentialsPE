@@ -68,10 +68,10 @@ commands:
         description: "Check when a player was last online"
         usage: /seen <player>
         permission: essentials.command.seen
-#    setspawn:
-#        description: "Change your server spawn position"
-#        usage: /setspawn
-#        permission: essentials.command.setspawn
+    setspawn:
+        description: "Change your server spawn position"
+        usage: /setspawn
+        permission: essentials.command.setspawn
 #    top:
 #        description: "Get at the highest block above you"
 #        usage: /top

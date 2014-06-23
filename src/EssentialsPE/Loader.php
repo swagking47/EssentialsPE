@@ -5,6 +5,8 @@ namespace EssentialsPE;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\player\PlayerPreLoginEvent;
+use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
@@ -378,7 +380,7 @@ class Loader extends PluginBase implements Listener{
                 }else{
                     $pos = $sender->getPosition();
                     $sender->getLevel()->setSpawn($pos);
-                    Server::getInstance()->setDefaultLevel($sender->getLevel()->getName());
+                    $this->getServer()->setDefaultLevel($sender->getLevel());
                     $sender->sendMessage(TextFormat::YELLOW . "Spawn changed!");
                 }
                 return true;
@@ -388,10 +390,11 @@ class Loader extends PluginBase implements Listener{
                     $sender->sendMessage($runingame);
                 }else{
                     $level = $sender->getLevel();
-                    $pos = $sender->getPosition();
-                    $block = $level->getHighestBlockAt($pos->getX(), $pos->getZ());
-                    $sender->sendMessage(TextFormat::YELLOW . "Teleporting...");
-                    $sender->teleport($block);
+                    $block = $level->getHighestBlockAt($sender->getX(), $sender->getZ());
+                    if($block instanceof Position || $block instanceof Vector3){
+                        $sender->sendMessage(TextFormat::YELLOW . "Teleporting...");
+                        $sender->teleport($block);
+                    }
                 }
                 return true;
                 break;
