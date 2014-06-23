@@ -10,33 +10,12 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
     /** @var \pocketmine\plugin\Plugin */
     public $plugin;
 
+    public function __construct($name, $description = "", $usageMessage = null, Loader $plugin , array $aliases = []){
+        parent::__construct($name, $description, $usageMessage, $aliases);
+        $this->plugin = $plugin;
+    }
+
     public function getPlugin() {
         return $this->plugin;
-    }
-
-    public function isPlayer($player){
-        if($player instanceof Player && $player->isOnline()){
-            return $player instanceof Player;
-        }else{
-            return false;
-        }
-    }
-
-    public function getPlayer($player){
-        $r = "";
-        if(Server::getInstance()->getPlayerExact($player)){
-            $r = Server::getInstance()->getPlayerExact($player);
-        }else{
-            foreach(Server::getInstance()->getOnlinePlayers() as $p){
-                if($p->getDisplayName() == $player){
-                    $r = Server::getInstance()->getPlayerExact($p->getName());
-                }
-            }
-        }
-        if($r == ""){
-            return false;
-        }else{
-            return $r;
-        }
     }
 }

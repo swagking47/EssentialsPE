@@ -2,80 +2,202 @@ name: EssentialsPE
 main: EssentialsPE\Loader
 version: 1.0.0
 api: [1.0.0]
-author: LegendsofMCPE Team
+author: iksaku
+
+commands:
+    broadcast:
+        description: Broadcast a message.
+        usage: "/broadcast <message> [p:<permission>]"
+        permission: essentials.command.broadcast.use
+        aliases: ["bcast"]
+    burn:
+        description: Set a player on fire!
+        usage: "/burn <player> <seconds>"
+        permission: essentials.command.burn
+    clearinventory:
+        description: Clear a player's inventory
+        usage: "/clearinventory [player]"
+        permission: essentials.command.clearinventory.use
+        aliases: ["ci", "clean", "clearinvent"]
+    essentials:
+        description: "Check the current EssentialsPE version"
+        usage: /essentials
+        permission: essentials.command.essentials
+        aliases: ["ess"]
+    extinguish:
+        description: "Extinguish a player"
+        usage: /extinguish [player]
+        permission: essentials.command.extinguish.use
+    getpos:
+        description: "Get a player's position"
+        usage: /getpos [player]
+        permission: essentials.command.getpos.use
+        aliases: ["coords", "position", "whereami", "getlocation", "getloc"]
+    heal:
+        description: "Heal a player"
+        usage: /heal [player]
+        permission: essentials.command.heal.use
+    kickall:
+        description: "Kick all the players"
+        usage: /kickall
+        permission: essentials.command.kickall
+    more:
+        description: "Get a stack of the item you hold"
+        usage: /more
+        permission: essentials.command.more
+#    mute:
+#        description: "Mute a specified player from the chat"
+#        usage: /mute <player>
+#        permission: essentials.command.mure.use
+#        aliases: ["silence"]
+    nick:
+        description: "Change your in-game name"
+        usage: /nick <new nick> [player]
+        permission: essentials.command.nick.use
+        aliases: ["nickname"]
+    realname:
+        description: "See a player's real name"
+        usage: /realname <player>
+        permission: essentials.command.realname
+    repair:
+        description: "Repair the item you're holding"
+        usage: /repair
+        permission: essentials.command.repair
+        aliases: ["fix"]
+    seen:
+        description: "Check when a player was last online"
+        usage: /seen <player>
+        permission: essentials.command.seen
+#    setspawn:
+#        description: "Change your server spawn position"
+#        usage: /setspawn
+#        permission: essentials.command.setspawn
+#    top:
+#        description: "Get at the highest block above you"
+#        usage: /top
+#        permission: essentials.command.top
+#    vanish:
+#        description: "Hide yourself or another player"
+#        usage: /vanish [player]
+#        permission: essentials.command.vanish.use
+#        aliases: ["v"]
 
 permissions:
     essentials:
         default: op
         description: "All the Essentials' features"
         children:
-            essentials.broadcast:
+            essentials.ban.exempt:
                 default: op
-                description: "Broadcast a message"
-            essentials.burn:
-                default: op
-                description: "Set a player on fire"
+                description: "Prevent the player from being banned"
             essentials.colorchat:
                 default: op
                 description: "Allow the player to talk with colored messages"
-            essentials.essentials:
+            essentials.command:
                 default: op
-                description: "See the current Essentials version"
-            essentials.extinguish:
-                default: op
-                description: "Extinguish a player"
+                description: ""
                 children:
-                  essentials.extinguish.use:
-                    default: op
-                    description: "Extinguish yourslef"
-                  essentials.extinguish.other:
-                    default: op
-                    description: "Extinguish other players"
-            essentials.getpos:
-                default: op
-                description: "Get any player's position"
-                children:
-                    essentials.getpos.use:
-                        default: true
-                        description: "Get your curren position"
-                    essentials.getpos.other:
+                    essentials.command.broadcast:
                         default: op
-                        description: "Get other player's position"
-            essentials.heal:
-                default: op
-                description: "Heal yourself or other players"
-                children:
-                    essentials.heal.use:
+                        description: "Broadcast a message"
+                        children:
+                            essentials.command.broadcast.use:
+                                default: op
+                                description: "Broadcast a message"
+                            essentials.command.broadcast.permselect:
+                                default: op
+                                description: "Broadcast a message to players that have a certain permission"
+                    essentials.command.burn:
                         default: op
-                        description: "Heal yourself"
-                    essentials.heal.other:
+                        description: "Set a player on fire"
+                    essentials.command.clearinventory:
                         default: op
-                        description: "Heal other players"
-            essentials.kickall:
-              default: op
-              description: "Kick all the online players except the sender"
-            essentials.more:
-                default: op
-                description: "Get a stack of the item you're holding"
-            essentials.nick:
-                default: op
-                description: "Change your or others name"
-                children:
-                    essentials.nick.use:
+                        description: "Clear a player inventory"
+                        children:
+                            essentials.command.clearinventory.use:
+                                default: op
+                                description: "Clear your inventory"
+                            essentials.command.clearinventory.other:
+                                defult: op
+                                description: "Clear other's inventory"
+                    essentials.command.essentials:
                         default: op
-                        description: "Change your name"
-                    essentials.nick.other:
+                        description: "See the current Essentials version"
+                    essentials.command.extinguish:
                         default: op
-                        desctiption: "Change others name"
-            essentials.realname:
-                default: op
-                description: "See a player's realname"
-            essentials.repair:
-                default: op
-                description: "Repair the item you're holding"
-            essentials.seen:
-                default: op
-                description: "Check player's last online time"
-            essentials.setspawn:
-                default: op
-                description: "Change your server's general spawn"
+                        description: "Extinguish a player"
+                        children:
+                            essentials.command.extinguish.use:
+                                default: op
+                                description: "Extinguish yourslef"
+                            essentials.command.extinguish.other:
+                                default: op
+                                description: "Extinguish other players"
+                    essentials.command.getpos:
+                        default: op
+                        description: "Get any player's position"
+                        children:
+                            essentials.command.getpos.use:
+                                default: true
+                                description: "Get your curren position"
+                            essentials.command.getpos.other:
+                                default: op
+                                description: "Get other player's position"
+                    essentials.command.heal:
+                        default: op
+                        description: "Heal yourself or other players"
+                        children:
+                            essentials.command.heal.use:
+                                default: op
+                                description: "Heal yourself"
+                            essentials.command.heal.other:
+                                default: op
+                                description: "Heal other players"
+                    essentials.command.kickall:
+                        default: op
+                        description: "Kick all the online players except the sender"
+                    essentials.command.more:
+                        default: op
+                        description: "Get a stack of the item you're holding"
+                    essentials.command.mute:
+                        default: op
+                        description: "Mute a player from the chat"
+                        chldren:
+                            essentials.command.mute.use:
+                                default: op
+                                description: "Let you mute a player"
+                            essentials.command.mute.exempt:
+                                default: op
+                                description: "Prevent a player from being muted"
+                    essentials.command.nick:
+                        default: op
+                        description: "Change your or others name"
+                        children:
+                            essentials.command.nick.use:
+                                default: op
+                                description: "Change your name"
+                            essentials.command.nick.other:
+                                default: op
+                                desctiption: "Change others name"
+                    essentials.command.realname:
+                        default: op
+                        description: "See a player's realname"
+                    essentials.command.repair:
+                        default: op
+                        description: "Repair the item you're holding"
+                    essentials.command.seen:
+                        default: op
+                        description: "Check player's last online time"
+                    essentials.command.setspawn:
+                        default: op
+                        description: "Change your server's general spawn"
+                    essentials.command.vanish:
+                        default: op
+                        description: "Hide yourself ot another player"
+                        children:
+                            essentials.command.vanish.use:
+                                default: op
+                                description: "Hide yourself from other players"
+                            essentials.command.vanish.other:
+                                default: op
+                                description: "Hide another player"
