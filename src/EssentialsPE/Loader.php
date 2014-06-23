@@ -74,7 +74,7 @@ class Loader extends PluginBase implements Listener{
                             $sender->sendMessage(TextFormat::RED . "[Error] Invalid time.");
                         }else{
                             $player->setOnFire($time);
-                            $sender->sendMessage(TextFormat::YELLOW . $player->getDisplayName() . " is now on fire!");
+                            $sender->sendMessage(TextFormat::YELLOW . "$args[0] is now on fire!");
                         }
                     }
                 }
@@ -105,9 +105,9 @@ class Loader extends PluginBase implements Listener{
                                 $player->getInventory()->clearAll();
                                 $player->sendMessage(TextFormat::AQUA . "Your inventory was cleared");
                                 if(substr($player->getDisplayName(), -1, 1) != "s"){
-                                    $sender->sendMessage(TextFormat::GREEN . $player->getDisplayName() . "'s inventory was cleared");
+                                    $sender->sendMessage(TextFormat::GREEN . "$args[0]'s inventory was cleared");
                                 }else{
-                                    $sender->sendMessage(TextFormat::GREEN . $player->getDisplayName() . "' inventory was cleared");
+                                    $sender->sendMessage(TextFormat::GREEN . "$args[0]' inventory was cleared");
                                 }
                             }
                         }
@@ -141,7 +141,7 @@ class Loader extends PluginBase implements Listener{
                                 $sender->sendMessage($notfound);
                             }else{
                                 $player->extinguish();
-                                $sender->sendMessage(TextFormat::AQUA . $player->getDisplayName() . " has been extinguished!");
+                                $sender->sendMessage(TextFormat::AQUA . "$args[0] has been extinguished!");
                             }
                         }
                         break;
@@ -170,7 +170,7 @@ class Loader extends PluginBase implements Listener{
                                 $sender->sendMessage($notfound);
                             }else{
                                 $pos = $player->getPosition();
-                                $sender->sendMessage(TextFormat::YELLOW . $player->getDisplayName() . TextFormat::GREEN . " is in world: " . TextFormat::AQUA . $player->getLevel()->getName() . "\n" . TextFormat::GREEN . "Coordinates: X: " . TextFormat::AQUA . floor($pos->x) . TextFormat::GREEN . ", Y: " . TextFormat::AQUA . floor($pos->y) . TextFormat::GREEN . ", Z: " . TextFormat::AQUA . floor($pos->z));
+                                $sender->sendMessage(TextFormat::YELLOW . $args[0] . TextFormat::GREEN . " is in world: " . TextFormat::AQUA . $player->getLevel()->getName() . "\n" . TextFormat::GREEN . "Coordinates: X: " . TextFormat::AQUA . floor($pos->x) . TextFormat::GREEN . ", Y: " . TextFormat::AQUA . floor($pos->y) . TextFormat::GREEN . ", Z: " . TextFormat::AQUA . floor($pos->z));
                             }
                         }
                         break;
@@ -200,7 +200,7 @@ class Loader extends PluginBase implements Listener{
                             }else{
                                 $player->setHealth($player->getMaxHealth());
                                 $player->sendMessage(TextFormat::GREEN . "You have been healed!");
-                                $sender->sendMessage(TextFormat::GREEN . $player->getDisplayName() . " has been healed!");
+                                $sender->sendMessage(TextFormat::GREEN . "$args[0] has been healed!");
                             }
                         }
                         break;
@@ -242,14 +242,14 @@ class Loader extends PluginBase implements Listener{
                     $sender->sendMessage($notfound);
                 }else{
                     if($player->hasPermission("essentials.command.mute.exempt")){
-                        $sender->sendMessage(TextFormat::RED . $player->getDisplayName() . " can't be muted");
+                        $sender->sendMessage(TextFormat::RED . "$args[0] can't be muted");
                         return false;
                     }
                     $this->switchMute($player);
                     if(!$this->isMuted($player)){
-                        $sender->sendMessage(TextFormat::YELLOW . $player->getDisplayName() . " has been unmuted!");
+                        $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been unmuted!");
                     }else{
-                        $sender->sendMessage(TextFormat::YELLOW . $player->getDisplayName() . " has been muted!");
+                        $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been muted!");
                     }
                 }
                 break;
@@ -278,9 +278,9 @@ class Loader extends PluginBase implements Listener{
                                 }else{
                                     $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nick");
                                     if(substr($player->getDisplayName(), -1, 1) != "s"){
-                                        $sender->sendMessage(TextFormat::GREEN . $player->getDisplayName() . "'s nick is now $nick");
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick is now $nick");
                                     }else{
-                                        $sender->sendMessage(TextFormat::GREEN . $player->getDisplayName() . "' nick is now $nick");
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nick");
                                     }
                                     $this->setNick($player, $nick, true);
                                 }
@@ -299,9 +299,9 @@ class Loader extends PluginBase implements Listener{
                         $sender->sendMessage($notfound);
                     }else{
                         if(substr($args[0], -1, 1) == "s"){
-                            $sender->sendMessage(TextFormat::YELLOW . $player->getDisplayName() . "' real name is: " . TextFormat::RESET . $player->getName());
+                            $sender->sendMessage(TextFormat::YELLOW . "$args[0]' real name is: " . TextFormat::RESET . $player->getName());
                         }else{
-                            $sender->sendMessage(TextFormat::YELLOW . $player->getDisplayName() . "'s real name is: " . TextFormat::RESET . $player->getName());
+                            $sender->sendMessage(TextFormat::YELLOW . "$args[0]'s real name is: " . TextFormat::RESET . $player->getName());
                         }
                     }
                 }
@@ -419,10 +419,10 @@ class Loader extends PluginBase implements Listener{
                                 $this->switchVanish($player);
                                 if(!$this->isVanished($player)){
                                     $player->sendMessage(TextFormat::GRAY . "You're now visible");
-                                    $sender->sendMessage(TextFormat::GRAY . $player->getDisplayName() . " is now visible");
+                                    $sender->sendMessage(TextFormat::GRAY . "$args[0] is now visible");
                                 }else{
                                     $player->sendMessage(TextFormat::GRAY . "You're now vanished!");
-                                    $sender->sendMessage(TextFormat::GRAY . $player->getDisplayName() . " is now vanished!");
+                                    $sender->sendMessage(TextFormat::GRAY . "$args[0] is now vanished!");
                                 }
                             }
                             break;
@@ -493,17 +493,18 @@ class Loader extends PluginBase implements Listener{
      * @return bool
      *
      * @priority HIGH
+     * @ignoreCancelled false
      */
     public function onPlayerChat(PlayerChatEvent $event){
         if($this->getSession($event->getPlayer(), "mute") == true){
-            return false;
+            $event->setCancelled();
         }
     }
 
     public function getPlayer($player){
         $r = "";
         foreach(Server::getInstance()->getOnlinePlayers() as $p){
-            if($p->getDisplayName() == $player){
+            if($p->getDisplayName()||$p->getName() == $player){
                 $r = Server::getInstance()->getPlayerExact($p->getName());
             }
         }
