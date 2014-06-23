@@ -388,7 +388,8 @@ class Loader extends PluginBase implements Listener{
                     $sender->sendMessage($runingame);
                 }else{
                     $level = $sender->getLevel();
-                    $block = $level->getHighestBlockAt($sender->getX(), $sender->getZ());
+                    $pos = $sender->getPosition();
+                    $block = $level->getHighestBlockAt($pos->getX(), $pos->getZ());
                     $sender->sendMessage(TextFormat::YELLOW . "Teleporting...");
                     $sender->teleport($block);
                 }
