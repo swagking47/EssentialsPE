@@ -234,7 +234,7 @@ class Loader extends PluginBase implements Listener{
                 }
                 return true;
                 break;
-            case "mute:":
+            case "mute":
                 if(count($args) != 1){
                     $sender->sendMessage($usage);
                     return false;
