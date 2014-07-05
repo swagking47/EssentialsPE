@@ -23,10 +23,9 @@ class Top extends BaseCommand{
         }else{
             $level = $sender->getLevel();
             $block = $level->getHighestBlockAt($sender->getX(), $sender->getZ());
-            if($block instanceof Vector3){
-                $sender->sendMessage(TextFormat::YELLOW . "Teleporting...");
-                $sender->teleport($block);
-            }
+            $pos = new Vector3($sender->getX(), ($block + 1), $sender->getZ());
+            $sender->sendMessage(TextFormat::YELLOW . "Teleporting...");
+            $sender->teleport($pos);
         }
         return true;
     }

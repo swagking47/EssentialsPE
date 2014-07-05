@@ -18,7 +18,7 @@ class Homes {
 
     public function set($name){
         if(!$this->config->exists($name)){
-            if(!$this->player->hasPermission("essentuials.home." . ($this->countHomes() + 1))){
+            if(!$this->player->hasPermission("essentials.home." . ($this->count() + 1))){
                 return false;
             }
             $pos = array();
@@ -38,7 +38,9 @@ class Homes {
             return false;
         }
         $home = $this->config->get($name);
-        $this->player->setLevel($home["level"]);
+        if($this->player->getLevel()->getName() != $home["level"]){
+            $this->player->setLevel($home["level"]);
+        }
         $this->player->teleport(new Vector3($home["x"], $home["y"], $home["z"]), $home["yaw"], $home["pitch"]);
         return true;
     }

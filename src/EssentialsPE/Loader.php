@@ -46,52 +46,8 @@ class Loader extends PluginBase implements Listener{
     public function onEnable() {
         @mkdir(Loader::DIRECTORY);
 	    $this->getLogger()->info(TextFormat::YELLOW . "Loading...");
-        $this->registerEvents();
+        $this->getServer()->getPluginManager()->registerEvents(new Events(), $this);
         $this->registerCommands();
-    }
-
-    /**
-     * @param PlayerPreLoginEvent $event
-     *
-     * @priority HIGHEST
-     */
-    public function onPlayerPreLogin(PlayerPreLoginEvent $event){
-        //Ban remove:
-        $player = $event->getPlayer();
-        if($player->isBanned() && $player->hasPermission("essentials.command.ban.exempt")){
-            $player->setBanned(false);
-        }
-        //Nick and NameTags:
-        $Nick = new Nicks($event->getPlayer());
-        if($Nick->get() != false){
-            $Nick->set($Nick->get(), false);
-        }
-    }
-
-    /**
-     * @param PlayerJoinEvent $event
-     *
-     * @priority HIGH
-     */
-    public function onPlayerJoin(PlayerJoinEvent $event){
-        $player = $event->getPlayer();
-        //Join Message (nick):
-        $event->setJoinMessage($player->getDisplayName() . " joined the game");
-    }
-
-    /**
-     * @param PlayerQuitEvent $event
-     *
-     * @priority HIGH
-     */
-    public function onPlayerQuit(PlayerQuitEvent $event){
-        $player = $event->getPlayer();
-        //Quit message (nick):
-        $event->setQuitMessage($player->getDisplayName() . " left the game");
-    }
-
-    private function registerEvents(){
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     private function registerCommands(){
@@ -111,7 +67,7 @@ class Loader extends PluginBase implements Listener{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Repair($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Seen($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new SetSpawn($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Top($this)); //TODO
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Top($this));
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Vanish($this)); //TODO
     }
 }
