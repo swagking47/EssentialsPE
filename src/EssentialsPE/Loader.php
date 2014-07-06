@@ -19,6 +19,9 @@ use EssentialsPE\Commands\Seen;
 use EssentialsPE\Commands\SetSpawn;
 use EssentialsPE\Commands\Top;
 use EssentialsPE\Commands\Vanish;
+use EssentialsPE\Commands\Warps\RemoveWarp;
+use EssentialsPE\Commands\Warps\SetWarp;
+use EssentialsPE\Commands\Warps\Warp;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\player\PlayerPreLoginEvent;
@@ -69,5 +72,10 @@ class Loader extends PluginBase implements Listener{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new SetSpawn($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Top($this));
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Vanish($this)); //TODO
+
+        //Warps:
+        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new RemoveWarp($this)); //TODO
+        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new SetWarp($this)); //TODO
+        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Warp($this)); //TODO
     }
 }

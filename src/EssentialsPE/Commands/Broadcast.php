@@ -9,7 +9,7 @@ use pocketmine\utils\TextFormat;
 
 class Broadcast extends BaseCommand{
     public function __construct(Loader $plugin){
-        parent::__construct($plugin, "broadcast", "Broadcast a message.", "/broadcast <message> [p:<permission>]", ["bcast"]);
+        parent::__construct($plugin, "broadcast", "Broadcast a message.", "/broadcast <message>", ["bcast"]);
         $this->setPermission("essentials.command.broadcast.use");
     }
 

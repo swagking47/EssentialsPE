@@ -5,23 +5,6 @@ api: [1.0.0]
 author: iksaku
 website: https://github.com/LegendOfMCPE/EssentialsPE
 
-commands:
-#    removewarp:
-#        description: "Close a warp"
-#        usage: /removewarp <name>
-#        permission: essentials.command.warp.remove
-#        aliases: ["closewarp", "removewarp", "rmwarp", "delwarp"]
-#    setwarp:
-#        description: "Open a new warp"
-#        usage: /setwarp <name>
-#        permission: essentials.command.warp.set
-#        aliases: ["openwarp", "createwarp", "addwarp"]
-#    warp:
-#        description: "Teleport to a warp"
-#        usage: /warp <name>
-#        permission: essentials.command.warp.use
-#        aliases: ["warps"]
-
 permissions:
     essentials:
         default: op
@@ -145,9 +128,12 @@ permissions:
                             essentials.command.warp.use:
                                 default: op
                                 description: "Teleport to a warp!"
-                            essentials.command.warp.set:
+                            essentials.command.warp.other:
                                 default: op
-                                description: "Open a warp"
+                                description: "Teleport other player to a warp"
                             essentials.command.warp.remove:
                                 default: op
                                 description: "Close a warp"
+                            essentials.command.warp.set:
+                                default: op
+                                description: "Open a warp"

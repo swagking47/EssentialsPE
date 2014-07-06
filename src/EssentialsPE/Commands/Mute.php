@@ -34,10 +34,11 @@ class Mute extends BaseCommand{
                 $sender->sendMessage(TextFormat::RED . "$args[0] can't be muted");
                 return false;
             }
-            if(!$this->switchMute($player)){
-                $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been unmuted!");
-            }else{
+            $this->switchMute($player);
+            if($this->isMuted($player) === false){
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been muted!");
+            }else{
+                $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been unmuted!");
             }
         }
         return true;
@@ -46,10 +47,8 @@ class Mute extends BaseCommand{
     public function switchMute(Player $player){
         if(!array_key_exists($player->getName(), $this->muted)){
             array_push($this->muted, $player->getName());
-            return "muted";
         }else{
             unset($this->muted[array_search($player->getName(), $this->muted)]);
-            return "unmuted";
         }
     }
 
@@ -70,7 +69,7 @@ class Mute extends BaseCommand{
      */
     public function onPlayerChat(PlayerChatEvent $event){
         if($this->isMuted($event->getPlayer())){
-            $event->setCancelled(true);
+            return false;
         }
     }
 } 
