@@ -10,7 +10,15 @@ use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
 class Mute extends BaseCommand{
-    public $muted = [];
+    /**
+     * Information on this array is set like:
+     * Player Name => boolean (true/false)
+     *
+     * This is to help switching mute status, may change in the future
+     *
+     * @var array
+     */
+    public $mutes = [];
 
     public function __construct(Loader $plugin){
         parent::__construct($plugin, "mute", "Prevent a player from chatting", "/mute <player>", ["silence"]);
@@ -35,28 +43,28 @@ class Mute extends BaseCommand{
                 return false;
             }
             $this->switchMute($player);
-            if($this->isMuted($player) === false){
-                $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been muted!");
-            }else{
+            if(!$this->isMuted($player)){
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been unmuted!");
+            }else{
+                $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been muted!");
             }
         }
         return true;
     }
 
     public function switchMute(Player $player){
-        if(!array_key_exists($player->getName(), $this->muted)){
-            array_push($this->muted, $player->getName());
+        if($this->mutes[$player->getName()] == false){
+            $this->mutes[$player->getName()] = true;
         }else{
-            unset($this->muted[array_search($player->getName(), $this->muted)]);
+            $this->mutes[$player->getName()] = false;
         }
     }
 
     public function isMuted(Player $player){
-        if(!array_key_exists($player->getName(), $this->muted)){
-            return false;
-        }else{
+        if($this->mutes[$player->getName()] != false){
             return true;
+        }else{
+            return false;
         }
     }
 
@@ -68,8 +76,9 @@ class Mute extends BaseCommand{
      * @ignoreCancelled false
      */
     public function onPlayerChat(PlayerChatEvent $event){
-        if($this->isMuted($event->getPlayer())){
-            return false;
-        }
+        /*if($this->isMuted($event->getPlayer())){
+            $event->setCancelled();
+        }*/
+        $event->setCancelled();
     }
 } 

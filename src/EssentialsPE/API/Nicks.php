@@ -15,11 +15,13 @@ class Nicks {
     }
 
     public function set($nick, $save = true){
-        $this->player->setNameTag($nick);
-        $this->player->setDisplayName($nick);
-        if($save == true){
-            $this->config->set($this->player->getName(), $nick);
-            $this->config->save();
+        if($nick !== false){
+            $this->player->setNameTag($nick);
+            $this->player->setDisplayName($nick);
+            if($save == true){
+                $this->config->set($this->player->getName(), $nick);
+                $this->config->save();
+            }
         }
         return true;
     }

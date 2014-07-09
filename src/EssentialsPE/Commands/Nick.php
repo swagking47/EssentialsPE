@@ -43,7 +43,7 @@ class Nick extends BaseCommand{
                         }else{
                             $Nick = new Nicks($player);
                             $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
-                            if(substr($player->getDisplayName(), -1, 1) != "s"){
+                            if(substr($player->getDisplayName(), -1, 1) == "s"){
                                 $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick is now $nickname");
                             }else{
                                 $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nickname");

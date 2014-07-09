@@ -2,14 +2,13 @@
 namespace EssentialsPE\API;
 
 use EssentialsPE\Loader;
-use pocketmine\block\Block;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\utils\Config;
 
 class Warps {
     public $config;
-    private $player;
+    public $player;
 
     public function __construct(Player $player){
         $this->config = new Config(Loader::DIRECTORY . "Warps.yml", Config::YAML);
@@ -25,6 +24,23 @@ class Warps {
         $pos["pitch"] = $this->player->pitch;
         $pos["level"] = $this->player->getLevel()->getName();
         $this->config->set($name, $pos);
+    }
+
+    public function remove($name){
+        if(!$this->exist($name)){
+            return false;
+        }else{
+            $this->config->remove($name);
+            return true;
+        }
+    }
+
+    public function exist($name){
+        if(!$this->config->exists($name)){
+            return false;
+        }else{
+            return $name;
+        }
     }
 
     public function tp($name){

@@ -4,7 +4,9 @@ namespace EssentialsPE;
 use pocketmine\command\Command;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\event\Listener;
+use pocketmine\Player;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand, Listener{
     /** @var Loader */
@@ -19,7 +21,11 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand,
         return $this->plugin;
     }
 
-    public function colorMessage($message){
+    public function colorMessage(Player $player, $message){
+        if(!$player->hasPermission("essentials.colorchat")){
+            $player->sendMessage(TextFormat::RED . "You don't have permission to use colors in-chat.");
+            return false;
+        }
         $message = str_replace("&0", "§0", $message);
         $message = str_replace("&1", "§1", $message);
         $message = str_replace("&2", "§2", $message);
