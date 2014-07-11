@@ -19,12 +19,21 @@ class Repair extends BaseCommand{
         }
         if(!$sender instanceof Player){
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
-        }else{
-            $inv = $sender->getInventory();
-            $item = $inv->getItemInHand();
-            $item->setDamage(0);
-            $inv->setItemInHand($item);
+            return false;
         }
+        if(count($args) != 0){
+            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            return false;
+        }
+        $inv = $sender->getInventory();
+        $item = $inv->getItemInHand();
+        if(!$item->isTool()){
+            $sender->sendMessage(TextFormat::RED . "[Error] This item can't be repaired!");
+            return false;
+        }
+        $item->setDamage(0);
+        $inv->setItemInHand($item);
+        $sender->sendMessage(TextFormat::GREEN . "Item successfully repaired!");
         return true;
     }
 } 

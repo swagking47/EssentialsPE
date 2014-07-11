@@ -17,12 +17,16 @@ class SetSpawn extends BaseCommand{
     public function execute(CommandSender $sender, $alias, array $args){
         if(!$sender instanceof Player){
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
-        }else{
-            $pos = $sender->getPosition();
-            $sender->getLevel()->setSpawn($pos);
-            Server::getInstance()->setDefaultLevel($sender->getLevel());
-            $sender->sendMessage(TextFormat::YELLOW . "Spawn point changed!");
+            return false;
         }
+        if(count($args) != 0){
+            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            return false;
+        }
+        $pos = $sender->getPosition();
+        $sender->getLevel()->setSpawn($pos);
+        Server::getInstance()->setDefaultLevel($sender->getLevel());
+        $sender->sendMessage(TextFormat::YELLOW . "Spawn point changed!");
         return true;
     }
 } 

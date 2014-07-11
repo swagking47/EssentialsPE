@@ -1,7 +1,6 @@
 <?php
 namespace EssentialsPE;
 
-use EssentialsPE\API\Nicks;
 use EssentialsPE\Commands\Broadcast;
 use EssentialsPE\Commands\Burn;
 use EssentialsPE\Commands\ClearInventory;
@@ -13,16 +12,18 @@ use EssentialsPE\Commands\Heal;
 use EssentialsPE\Commands\KickAll;
 use EssentialsPE\Commands\More;
 use EssentialsPE\Commands\Mute;
-use EssentialsPE\Commands\Nick; //Use DIRECTORY
+use EssentialsPE\Commands\Nick;
 use EssentialsPE\Commands\RealName;
 use EssentialsPE\Commands\Repair;
 use EssentialsPE\Commands\Seen;
 use EssentialsPE\Commands\SetSpawn;
+use EssentialsPE\Commands\SignRegister;
 use EssentialsPE\Commands\Top;
 use EssentialsPE\Commands\Vanish;
 use EssentialsPE\Commands\Warps\RemoveWarp;
 use EssentialsPE\Commands\Warps\SetWarp;
 use EssentialsPE\Commands\Warps\Warp;
+use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 use pocketmine\event\Listener;
@@ -37,20 +38,31 @@ class Loader extends PluginBase implements Listener{
         $this->registerCommands();
 
         foreach($this->getServer()->getOnlinePlayers() as $p){
-            $nick = new Nicks($p);
-            $nick->set($nick->get(), false);
+            //Nicks
+            $api = new api();
+            $api->setNick($p, $api->getNick($p), false);
+            //Sessions & Mute
+            $api->muteSessionCreate($p);
+            $api->createSession($p);
         }
     }
 
     public function onDisable(){
         foreach($this->getServer()->getOnlinePlayers() as $p){
-            $nick = new Nicks($p);
-            $nick->set($p->getName(), false);
+            //Nicks
+            $api = new API();
+            $api->setNick($p, $p->getName(), false);
+            //Vanish disable
+            if($api->getSession($p, "vanish") === true){
+                foreach($this->getServer()->getOnlinePlayers() as $players){
+                    $players->showPlayer($p);
+                }
+            }
         }
     }
 
     private function registerCommands(){
-        $fallbackPrefix = "EssentialsPE";
+        $fallbackPrefix = "essentialspe";
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Broadcast($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Burn($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new ClearInventory($this));
@@ -60,14 +72,15 @@ class Loader extends PluginBase implements Listener{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Heal($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new KickAll($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new More($this));
-        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Mute($this)); //TODO
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Mute($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Nick($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new RealName($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Repair($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Seen($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new SetSpawn($this));
+        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new SignRegister($this)); //TODO
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Top($this));
-        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Vanish($this)); //TODO
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Vanish($this)); //TODO
 
         //Warps:
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new RemoveWarp($this)); //TODO
@@ -75,6 +88,6 @@ class Loader extends PluginBase implements Listener{
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Warp($this)); //TODO
 
         //Default Commands:
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Me($this)); //TODO
+        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Me($this)); //TODO
     }
 }

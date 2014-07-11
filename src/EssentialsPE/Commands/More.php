@@ -19,12 +19,16 @@ class More extends BaseCommand{
         }
         if(!$sender instanceof Player){
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
-        }else{
-            $inv = $sender->getInventory();
-            $item = $inv->getItemInHand();
-            $item->setCount($item->getMaxStackSize());
-            $inv->setItemInHand($item);
+            return false;
         }
+        if(count($args) != 0){
+            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            return false;
+        }
+        $inv = $sender->getInventory();
+        $item = $inv->getItemInHand();
+        $item->setCount($item->getMaxStackSize());
+        $inv->setItemInHand($item);
         return true;
     }
 } 

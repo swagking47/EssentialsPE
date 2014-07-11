@@ -18,12 +18,16 @@ class Heal extends BaseCommand{
             return false;
         }
         if(count($args) > 1){
-            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            if(!$sender instanceof Player){
+                $sender->sendMessage(TextFormat::RED . "Usage: /heal <player>");
+            }else{
+                $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            }
         }
         switch(count($args)){
             case 0:
                 if(!$sender instanceof Player){
-                    $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+                    $sender->sendMessage(TextFormat::RED . "Usage: /heal <player>");
                 }else{
                     $sender->setHealth($sender->getMaxHealth());
                     $sender->sendMessage(TextFormat::GREEN . "You have been healed!");
@@ -34,7 +38,7 @@ class Heal extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                 }else{
                     $player = $this->getPlayer($args[0]);
-                    if($player == false){
+                    if($player === false){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{
                         $player->setHealth($player->getMaxHealth());

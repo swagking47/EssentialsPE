@@ -20,13 +20,17 @@ class Top extends BaseCommand{
         }
         if(!$sender instanceof Player){
             $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
-        }else{
-            $level = $sender->getLevel();
-            $block = $level->getHighestBlockAt($sender->getX(), $sender->getZ());
-            $pos = new Vector3($sender->getX(), ($block + 1), $sender->getZ());
-            $sender->sendMessage(TextFormat::YELLOW . "Teleporting...");
-            $sender->teleport($pos);
+            return false;
         }
+        if(count($args) != 0){
+            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            return false;
+        }
+        $level = $sender->getLevel();
+        $block = $level->getHighestBlockAt($sender->getX(), $sender->getZ());
+        $pos = new Vector3($sender->getX(), ($block + 1), $sender->getZ());
+        $sender->sendMessage(TextFormat::YELLOW . "Teleporting...");
+        $sender->teleport($pos);
         return true;
     }
 } 

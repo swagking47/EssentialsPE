@@ -9,7 +9,7 @@ use pocketmine\utils\TextFormat;
 
 class KickAll extends BaseCommand{
     public function __construct(Loader $plugin){
-        parent::__construct($plugin, "kickall", "Kick all the players", "/kickall");
+        parent::__construct($plugin, "kickall", "Kick all the players", "/kickall <reason>");
         $this->setPermission("essentials.command.kickall");
     }
 
@@ -18,7 +18,7 @@ class KickAll extends BaseCommand{
             return false;
         }
         if(count($args) == 0){
-            $reason = "Unknown reason";
+            $reason = "Unknown";
         }else{
             $reason = implode(" ", $args);
         }

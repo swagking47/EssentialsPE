@@ -1,6 +1,7 @@
 <?php
 namespace EssentialsPE\Commands\DefaultCommands;
 
+use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
@@ -17,22 +18,21 @@ class Me extends BaseCommand{
         if(!$this->testPermission($sender)){
             return true;
         }
-
-        if(count($args) === 0){
-            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->usageMessage);
-
+        if($sender instanceof Player && $GLOBALS["mutes"][$sender->getName()] == true){
             return false;
         }
-
+        if(count($args) === 0){
+            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->usageMessage);
+            return false;
+        }
         $message = "* ";
         if($sender instanceof Player){
             $message .= $sender->getDisplayName();
         }else{
             $message .= $sender->getName();
         }
-
-        $sender->getServer()->broadcastMessage($message . " " . $this->colorMessage($sender, implode(" ", $args)));
-
+        $api = new API();
+        $sender->getServer()->broadcastMessage($message . " " . $api->colorMessage(implode(" ", $args)));
         return true;
     }
 } 

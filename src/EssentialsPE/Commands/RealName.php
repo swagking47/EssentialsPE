@@ -20,13 +20,13 @@ class RealName extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
             $player = $this->getPlayer($args[0]);
-            if($player == false){
+            if($player === false){
                 $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
             }else{
-                if(substr($args[0], -1, 1) == "s"){
-                    $sender->sendMessage(TextFormat::YELLOW . "$args[0]' real name is: " . TextFormat::RESET . $player->getName());
-                }else{
+                if(substr($args[0], -1, 1) != "s"){
                     $sender->sendMessage(TextFormat::YELLOW . "$args[0]'s real name is: " . TextFormat::RESET . $player->getName());
+                }else{
+                    $sender->sendMessage(TextFormat::YELLOW . "$args[0]' real name is: " . TextFormat::RESET . $player->getName());
                 }
             }
         }

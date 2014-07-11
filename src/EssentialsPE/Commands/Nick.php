@@ -2,6 +2,7 @@
 namespace EssentialsPE\Commands;
 
 use EssentialsPE\API\Nicks;
+use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
@@ -10,7 +11,7 @@ use pocketmine\utils\TextFormat;
 
 class Nick extends BaseCommand{
     public function __construct(Loader $plugin){
-        parent::__construct($plugin, "nick", "Change your in-game name", "/nick <new nick> [player]", ["nickname"]);
+        parent::__construct($plugin, "nick", "Change your in-game name", "/nick <new nick|off> [player]", ["nickname"]);
         $this->setPermission("essentials.command.nick.use");
     }
 
@@ -19,17 +20,26 @@ class Nick extends BaseCommand{
             return false;
         }
         if(count($args) == 0 || count($args) > 2){
-            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            if(!$sender instanceof Player){
+                $sender->sendMessage(TextFormat::RED . "Usage: /nick <new nick|off> <player>");
+            }else{
+                $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            }
         }else{
             switch(count($args)){
                 case 1:
                     $nickname = $args[0];
                     if(!$sender instanceof Player){
-                        $sender->sendMessage(TextFormat::RED . "Usage: /nick <nick> <player>");
+                        $sender->sendMessage(TextFormat::RED . "Usage: /nick <new nick|off> <player>");
                     }else{
-                        $Nick = new Nicks($sender);
-                        $Nick->set($nickname);
-                        $sender->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
+                        $api = new API();
+                        if($nickname == "off"){
+                            $sender->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
+                            $api->removeNick($sender, true);
+                        }else{
+                            $sender->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
+                            $api->setNick($sender, $nickname, true);
+                        }
                     }
                     break;
                 case 2:
@@ -41,14 +51,28 @@ class Nick extends BaseCommand{
                         if($player == false){
                             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                         }else{
-                            $Nick = new Nicks($player);
-                            $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
-                            if(substr($player->getDisplayName(), -1, 1) == "s"){
-                                $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick is now $nickname");
+                            $api = new API();
+                            if($nickname == "off"){
+                                $player->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
+                                if($player->getName() != $sender->getName()){
+                                    if(substr($player->getDisplayName(), -1, 1) == "s"){
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick has been disabled");
+                                    }else{
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick has been disabled");
+                                    }
+                                }
+                                $api->removeNick($player);
                             }else{
-                                $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nickname");
+                                $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
+                                if($player->getName() != $sender->getName()){
+                                    if(substr($player->getDisplayName(), -1, 1) == "s"){
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick is now $nickname");
+                                    }else{
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nickname");
+                                    }
+                                }
+                                $api->setNick($player, $nickname, true);
                             }
-                            $Nick->set($nickname);
                         }
                     }
                     break;

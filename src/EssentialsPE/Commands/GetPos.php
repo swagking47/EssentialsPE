@@ -18,12 +18,16 @@ class GetPos extends BaseCommand{
             return false;
         }
         if(count($args) > 1){
-            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            if(!$sender instanceof Player){
+                $sender->sendMessage(TextFormat::RED . "Usage: /getpos <player>");
+            }else{
+                $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            }
         }
         switch(count($args)){
             case 0:
                 if(!$sender instanceof Player){
-                    $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+                    $sender->sendMessage(TextFormat::RED . "Usage: /getpos <player>");
                 }else{
                     $pos = $sender->getPosition();
                     $sender->sendMessage(TextFormat::GREEN . "You're in world: " . TextFormat::AQUA . $sender->getLevel()->getName() . "\n" . TextFormat::GREEN . "Your Coordinates are:" . TextFormat::YELLOW . " X: " . TextFormat::AQUA . floor($pos->x) . TextFormat::GREEN . "," . TextFormat::YELLOW . " Y: " . TextFormat::AQUA . floor($pos->y) . TextFormat::GREEN . "," . TextFormat::YELLOW . " Z: " . TextFormat::AQUA . floor($pos->z));
@@ -34,7 +38,7 @@ class GetPos extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                 }else{
                     $player = $this->getPlayer($args[0]);
-                    if($player == false){
+                    if($player === false){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{
                         $pos = $player->getPosition();

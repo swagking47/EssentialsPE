@@ -21,7 +21,7 @@ class Burn extends BaseCommand{
         }else{
             $player = $this->getPlayer($args[0]);
             $time = $args[1];
-            if($player == false){
+            if($player === false){
                 $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
             }else{
                 if(!is_numeric($time)){

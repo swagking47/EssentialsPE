@@ -18,12 +18,16 @@ class ClearInventory extends BaseCommand{
             return false;
         }
         if(count($args) > 1){
-            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            if(!$sender instanceof Player){
+                $sender->sendMessage(TextFormat::RED . "/clearinventory <player>");
+            }else{
+                $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+            }
         }
         switch(count($args)){
             case 0:
                 if(!$sender instanceof Player){
-                    $sender->sendMessage(TextFormat::RED . "Please run this command in-game.");
+                    $sender->sendMessage(TextFormat::RED . "/clearinventory <player>");
                 }else{
                     $sender->getInventory()->clearAll();
                     $sender->sendMessage(TextFormat::AQUA . "Your inventory was cleared");
@@ -35,7 +39,7 @@ class ClearInventory extends BaseCommand{
                     return false;
                 }else{
                     $player = $this->getPlayer($args[0]);
-                    if($player == false){
+                    if($player === false){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{
                         $player->getInventory()->clearAll();
