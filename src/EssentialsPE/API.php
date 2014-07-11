@@ -1,7 +1,9 @@
 <?php
 namespace EssentialsPE;
 
+use EssentialsPE\Events\PlayerNickChangeEvent;
 use EssentialsPE\Loader;
+use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\Server;
@@ -9,6 +11,11 @@ use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
 class API {
+    public $plugin;
+
+    public function __construct(Loader $plugin){
+        $this->plugin = $plugin;
+    }
 
     public function colorMessage($message){
         $search = ["&0", "&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9", "&a", "&b", "&c", "&d", "&e", "&f", "&k", "&l", "&m", "&n", "&o", "&r"];
@@ -119,6 +126,7 @@ class API {
     //Nick
     public function setNick(Player $player, $nick, $save = true){
         $config = new Config(Loader::DIRECTORY . "Nicks.yml", Config::YAML);
+        Server::getInstance()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this->plugin, $player, $nick, $player->getDisplayName()));
         $nick = $nick . TextFormat::RESET;
         $player->setNameTag($nick);
         $player->setDisplayName($nick);
@@ -129,8 +137,9 @@ class API {
         return true;
     }
 
-    public function removeNick(Player $player, $save = true){
+    public function removeNick(Player $player, $nick, $save = true){
         $config = new Config(Loader::DIRECTORY . "Nicks.yml", Config::YAML);
+        Server::getInstance()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this->plugin, $player, $nick, $player->getDisplayName()));
         $player->setNameTag($player->getName());
         $player->setDisplayName($player->getName());
         if($save === true){
@@ -218,6 +227,17 @@ class API {
             return false;
         }else{
             return true;
+        }
+    }
+
+    public function switchLevelVanish(Player $player, Level $origin, Level $target){
+        if($this->isVanished($player)){
+            foreach($origin->getPlayers() as $p){
+                $p->showPlayer($player);
+            }
+            foreach($target->getPlayers() as $p){
+                $p->hidePlayer($p);
+            }
         }
     }
 } 

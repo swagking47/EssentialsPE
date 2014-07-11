@@ -1,8 +1,6 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use EssentialsPE\API\Nicks;
-use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
@@ -32,13 +30,12 @@ class Nick extends BaseCommand{
                     if(!$sender instanceof Player){
                         $sender->sendMessage(TextFormat::RED . "Usage: /nick <new nick|off> <player>");
                     }else{
-                        $api = new API();
                         if($nickname == "off"){
                             $sender->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
-                            $api->removeNick($sender, true);
+                            $this->api->removeNick($sender, true);
                         }else{
                             $sender->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
-                            $api->setNick($sender, $nickname, true);
+                            $this->api->setNick($sender, $nickname, true);
                         }
                     }
                     break;
@@ -51,7 +48,6 @@ class Nick extends BaseCommand{
                         if($player == false){
                             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                         }else{
-                            $api = new API();
                             if($nickname == "off"){
                                 $player->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
                                 if($player->getName() != $sender->getName()){
@@ -61,7 +57,7 @@ class Nick extends BaseCommand{
                                         $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick has been disabled");
                                     }
                                 }
-                                $api->removeNick($player);
+                                $this->api->removeNick($player);
                             }else{
                                 $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
                                 if($player->getName() != $sender->getName()){
@@ -71,7 +67,7 @@ class Nick extends BaseCommand{
                                         $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nickname");
                                     }
                                 }
-                                $api->setNick($player, $nickname, true);
+                                $this->api->setNick($player, $nickname, true);
                             }
                         }
                     }

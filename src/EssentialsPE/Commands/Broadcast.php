@@ -1,7 +1,6 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
@@ -21,8 +20,7 @@ class Broadcast extends BaseCommand{
         if(count($args) == 0){
             $sender->sendMessage(TextFormat::RED . $this->getUsage());
         }else{
-            $api = new API();
-            $message = TextFormat::LIGHT_PURPLE . "[Broadcast] " . TextFormat::RESET . $api->colorMessage(implode(" ",$args));
+            $message = TextFormat::LIGHT_PURPLE . "[Broadcast] " . TextFormat::RESET . $this->api->colorMessage(implode(" ",$args));
             Server::getInstance()->broadcastMessage($message);
         }
         return true;

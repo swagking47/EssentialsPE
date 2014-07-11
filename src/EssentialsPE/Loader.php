@@ -23,37 +23,39 @@ use EssentialsPE\Commands\Vanish;
 use EssentialsPE\Commands\Warps\RemoveWarp;
 use EssentialsPE\Commands\Warps\SetWarp;
 use EssentialsPE\Commands\Warps\Warp;
+use EssentialsPE\Events\EventHandler;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 use pocketmine\event\Listener;
 
 class Loader extends PluginBase implements Listener{
+    /** @var  \EssentialsPE\API */
+    public $api;
     const DIRECTORY = "plugins/EssentialsPE/";
 
     public function onEnable() {
         @mkdir(Loader::DIRECTORY);
 	    $this->getLogger()->info(TextFormat::YELLOW . "Loading...");
-        $this->getServer()->getPluginManager()->registerEvents(new Events(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new EventHandler(), $this);
         $this->registerCommands();
+        $this->api = new API($this);
 
         foreach($this->getServer()->getOnlinePlayers() as $p){
             //Nicks
-            $api = new api();
-            $api->setNick($p, $api->getNick($p), false);
+            $this->api->setNick($p, $this->api->getNick($p), false);
             //Sessions & Mute
-            $api->muteSessionCreate($p);
-            $api->createSession($p);
+            $this->api->muteSessionCreate($p);
+            $this->api->createSession($p);
         }
     }
 
     public function onDisable(){
         foreach($this->getServer()->getOnlinePlayers() as $p){
             //Nicks
-            $api = new API();
-            $api->setNick($p, $p->getName(), false);
+            $this->api->setNick($p, $p->getName(), false);
             //Vanish disable
-            if($api->getSession($p, "vanish") === true){
+            if($this->api->getSession($p, "vanish") === true){
                 foreach($this->getServer()->getOnlinePlayers() as $players){
                     $players->showPlayer($p);
                 }

@@ -2,7 +2,6 @@
 
 namespace EssentialsPE\Commands;
 
-use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
@@ -28,15 +27,14 @@ class Mute extends BaseCommand{
         if($player === false){
             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
         }else{
-            $api = new API();
             if($player->hasPermission("essentials.command.mute.exempt")){
-                if(!$api->isMuted($player)){
+                if(!$this->api->isMuted($player)){
                     $sender->sendMessage(TextFormat::RED . "$args[0] can't be muted");
                     return false;
                 }
             }
-            $api->switchMute($player);
-            if(!$api->isMuted($player)){
+            $this->api->switchMute($player);
+            if(!$this->api->isMuted($player)){
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been unmuted!");
             }else{
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been muted!");

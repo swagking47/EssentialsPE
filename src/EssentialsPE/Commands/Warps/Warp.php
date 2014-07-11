@@ -1,14 +1,10 @@
 <?php
 namespace EssentialsPE\Commands\Warps;
 
-use EssentialsPE\API\Warps;
-use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
-use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\Player;
-use pocketmine\tile\Sign;
 use pocketmine\utils\TextFormat;
 
 class Warp extends BaseCommand{
@@ -43,11 +39,10 @@ class Warp extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . "Usage: /warp <name> <player>");
                     return false;
                 }
-                $api = new API();
-                if(!$api->warpExist($args[0])){
+                if(!$this->api->warpExist($args[0])){
                     $sender->sendMessage(TextFormat::RED . "[Error] Unknown warp name.");
                 }else{
-                    $api->tpWarp($sender, $args[0]);
+                    $this->api->tpWarp($sender, $args[0]);
                     $sender->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $args[0]");
                 }
                 return true;
@@ -57,13 +52,12 @@ class Warp extends BaseCommand{
                 if($player === false){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{
-                    $api = new API();
-                    if(!$api->warpExist($args[0])){
+                    if(!$this->api->warpExist($args[0])){
                         $sender->sendMessage(TextFormat::RED . "[Error] Unknown warp name.");
                     }else{
                         $sender->sendMessage(TextFormat::YELLOW . "Teleporting $args[1] to warp: $args[0]");
                         $player->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $args[0]");
-                        $api->tpWarp($player, $args[0]);
+                        $this->api->tpWarp($player, $args[0]);
                     }
                 }
                 return true;

@@ -28,14 +28,13 @@ class SignRegister extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
             return false;
         }
-        $api = new API();
         switch($args[0]){
             case "warp":
                 if(count($args) != 2){
                     $sender->sendMessage(TextFormat::RED . "Usage: /signregister warp <warp name>");
                     return false;
                 }
-                if(!$api->warpExist($args[0])){
+                if(!$this->api->warpExist($args[0])){
                     $sender->sendMessage(TextFormat::RED . "[Error] Warp $args[0] doesn't exist.");
                 }else{
                     $GLOBALS["signregister"][$sender->getName()]["warp"] = $args[0];
@@ -93,9 +92,8 @@ class SignRegister extends BaseCommand{
             }else{
                 //Warp
                 if($text[0] == TextFormat::LIGHT_PURPLE . "[Warp]"){
-                    $api = new API();
                     $player->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $text[1]");
-                    $api->tpWarp($player, $text[1]);
+                    $this->api->tpWarp($player, $text[1]);
                 }elseif($text[0] == TextFormat::LIGHT_PURPLE . "[Teleport]"){
                     $player->sendMessage(TextFormat::YELLOW . "Teleporting...");
                     $player->teleport(new Vector3($text[1], $text[2], $text[3]));

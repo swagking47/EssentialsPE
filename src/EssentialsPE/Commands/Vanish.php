@@ -23,14 +23,13 @@ class Vanish extends BaseCommand{
         if(count($args) > 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
-            $api = new API();
             switch(count($args)){
                 case 0:
                     if(!$sender instanceof Player){
                         $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
                     }else{
-                        $api->switchVanish($sender);
-                        if(!$api->isVanished($sender)){
+                        $this->api->switchVanish($sender);
+                        if(!$this->api->isVanished($sender)){
                             $sender->sendMessage(TextFormat::GRAY . "You're now visible");
                         }else{
                             $sender->sendMessage(TextFormat::GRAY . "You're now vanished!");
@@ -42,8 +41,8 @@ class Vanish extends BaseCommand{
                     if($player == false){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{
-                        $api->switchVanish($player);
-                        if(!$api->isVanished($player)){
+                        $this->api->switchVanish($player);
+                        if(!$this->api->isVanished($player)){
                             $player->sendMessage(TextFormat::GRAY . "You're now visible");
                             $sender->sendMessage(TextFormat::GRAY . "$args[0] is now visible");
                         }else{
