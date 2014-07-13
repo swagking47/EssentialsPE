@@ -138,11 +138,21 @@ class EventHandler implements Listener{
     public function onBlockTap(PlayerInteractEvent $event){
         $player = $event->getPlayer();
         $block = $event->getBlock();
+        $item = $event->getItem();
 
-        //Register a Warp/Teleport Sign
+        //PowerTool
+        if($this->plugin->isPowerToolEnabled($player)){
+            if($this->plugin->getPowerToolItemCommand($player, $item) !== false){
+                Server::getInstance()->dispatchCommand($player, $this->plugin->getPowerToolItemCommand($player, $item));
+                $event->setCancelled();
+            }
+        }
+
+        //SignRegister
         if($block instanceof Sign){
             $text = $block->getText();
             if(!$this->plugin->getSignRegisterState($player)){
+                //Teleports...
                 if($text[0] == TextFormat::LIGHT_PURPLE . "[Warp]"){ //Warp
                     $player->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $text[1]");
                     $this->plugin->tpWarp($player, $text[1]);

@@ -112,6 +112,12 @@ permissions:
                             essentials.command.nick.other:
                                 default: op
                                 desctiption: "Change others name"
+                    essentials.command.powertool:
+                        default: true
+                        description: "Allow to toggle and use PowerTool"
+                    essentials.command.powertooltoggle:
+                        default: op
+                        description: "Allow to disable PowerTool from all the items (of a player)"
                     essentials.command.pvp:
                         default: true
                         description: "Toggle PvP on/off"

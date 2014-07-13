@@ -13,6 +13,8 @@ use EssentialsPE\Commands\KickAll;
 use EssentialsPE\Commands\More;
 use EssentialsPE\Commands\Mute; //Use API
 use EssentialsPE\Commands\Nick; //Use API
+use EssentialsPE\Commands\PowerTool\PowerTool;
+use EssentialsPE\Commands\PowerTool\PowerToolToggle;
 use EssentialsPE\Commands\PvP; //Use API
 use EssentialsPE\Commands\RealName;
 use EssentialsPE\Commands\Repair;
@@ -26,6 +28,7 @@ use EssentialsPE\Commands\Warps\SetWarp;
 use EssentialsPE\Commands\Warps\Warp;
 use EssentialsPE\Events\EventHandler; //Use API
 use EssentialsPE\Events\PlayerNickChangeEvent;
+use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -78,6 +81,8 @@ class Loader extends PluginBase{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new More($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Mute($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Nick($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new PowerTool($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new PowerToolToggle($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new PvP($this)); //Experimental
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new RealName($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Repair($this));
@@ -128,6 +133,7 @@ class Loader extends PluginBase{
     private $mutes = [];
     private $default = [
         "god" => false,
+        "powertool" => false,
         "pvp" => false,
         "signregister" => false,
         "vanish" => false
@@ -265,6 +271,36 @@ class Loader extends PluginBase{
         }else{
             return $config->get($player->getName());
         }
+    }
+
+    //PowerTool
+    public function isPowerToolEnabled(Player $player){
+        if($this->getSession($player, "powertool") === false){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public function setPowerToolItemCommand(Player $player, Item $item, $command_line){
+        $this->sessions[$player->getName()]["powertool"][$item->getID()] = $command_line;
+    }
+
+    public function getPowerToolItemCommand(Player $player, Item $item){
+        if(!isset($this->sessions[$player->getName()]["powertool"][$item->getID()])){
+            return false;
+        }
+        return $this->sessions[$player->getName()]["powertool"][$item->getID()];
+    }
+
+    /** Disable PowerTool on the specified item only */
+    public function disablePowerToolItem(Player $player, Item $item){
+        unset($this->sessions[$player->getName()]["powertool"][$item->getID()]);
+    }
+
+    /** Disable PowerTool on all the items */
+    public function disablePowerTool(Player $player){
+        $this->setSession($player, "powertool", false);
     }
 
     //Player vs Player (aka PvP)
