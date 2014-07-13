@@ -20,8 +20,8 @@ class Broadcast extends BaseCommand{
         if(count($args) == 0){
             $sender->sendMessage(TextFormat::RED . $this->getUsage());
         }else{
-            $message = TextFormat::LIGHT_PURPLE . "[Broadcast] " . TextFormat::RESET . $this->plugin->colorMessage(implode(" ",$args));
-            Server::getInstance()->broadcastMessage($message);
+            $message = $this->plugin->colorMessage(implode(" ",$args));
+            Server::getInstance()->broadcastMessage(TextFormat::LIGHT_PURPLE . "[Broadcast] " . TextFormat::RESET . $message);
         }
         return true;
     }

@@ -113,7 +113,10 @@ class Loader extends PluginBase implements Listener{
      *
      */
 
-    public function colorMessage($message){
+    public function colorMessage($message, $player = false){
+        if($player !== false && $player instanceof Player && !$player->hasPermission("essentials.colorchat")){
+            return $message;
+        }
         $search = ["&0", "&1", "&2", "&3", "&4", "&5", "&6", "&7", "&8", "&9", "&a", "&b", "&c", "&d", "&e", "&f", "&k", "&l", "&m", "&n", "&o", "&r"];
         //$formats = ["§0", "§1", "§2", "§3", "§4", "§5", "§6", "§7", "§8", "§9", "§a", "§b", "§c", "§d", "§e", "§f", "§k", "§l", "§m", "§n", "§o", "§r"];
         foreach($search as $s){

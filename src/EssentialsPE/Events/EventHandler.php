@@ -85,7 +85,10 @@ class EventHandler implements Listener{
         if($this->plugin->isMuted($player)){
             $event->setCancelled();
         }
-        $message = $this->plugin->colorMessage($message);
+        $message = $this->plugin->colorMessage($message, $player);
+        if($message === false){
+            $event->setCancelled();
+        }
         $event->setMessage($message);
     }
 

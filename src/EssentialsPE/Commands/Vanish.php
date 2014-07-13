@@ -28,7 +28,7 @@ class Vanish extends BaseCommand{
         switch(count($args)){
             case 0:
                 if(!$sender instanceof Player){
-                    $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+                    $sender->sendMessage(TextFormat::RED . "Usage: /vanish <player>");
                 }else{
                     $this->plugin->switchVanish($sender);
                     if(!$this->plugin->isVanished($sender)){
