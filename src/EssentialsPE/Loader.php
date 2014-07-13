@@ -4,7 +4,6 @@ namespace EssentialsPE;
 use EssentialsPE\Commands\Broadcast; //Use API
 use EssentialsPE\Commands\Burn;
 use EssentialsPE\Commands\ClearInventory;
-use EssentialsPE\Commands\DefaultCommands\Me; //Use API
 use EssentialsPE\Commands\Essentials;
 use EssentialsPE\Commands\Extinguish;
 use EssentialsPE\Commands\GetPos;
@@ -33,9 +32,8 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
-use pocketmine\event\Listener;
 
-class Loader extends PluginBase implements Listener{
+class Loader extends PluginBase{
     const DIRECTORY = "plugins/EssentialsPE/";
 
     public function onEnable(){
