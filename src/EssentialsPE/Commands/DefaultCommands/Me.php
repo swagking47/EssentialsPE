@@ -18,7 +18,7 @@ class Me extends BaseCommand{
         if(!$this->testPermission($sender)){
             return true;
         }
-        if($sender instanceof Player && $this->api->isMuted($sender)){
+        if($sender instanceof Player && $this->plugin->isMuted($sender)){
             return false;
         }
         if(count($args) === 0){
@@ -31,7 +31,7 @@ class Me extends BaseCommand{
         }else{
             $message .= $sender->getName();
         }
-        $sender->getServer()->broadcastMessage($message . " " . $this->api->colorMessage(implode(" ", $args)));
+        $sender->getServer()->broadcastMessage($message . " " . $this->plugin->colorMessage(implode(" ", $args)));
         return true;
     }
 } 

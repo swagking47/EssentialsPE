@@ -32,10 +32,10 @@ class Nick extends BaseCommand{
                     }else{
                         if($nickname == "off"){
                             $sender->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
-                            $this->api->removeNick($sender, true);
+                            $this->plugin->removeNick($sender, true);
                         }else{
                             $sender->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
-                            $this->api->setNick($sender, $nickname, true);
+                            $this->plugin->setNick($sender, $nickname, true);
                         }
                     }
                     break;
@@ -57,7 +57,7 @@ class Nick extends BaseCommand{
                                         $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick has been disabled");
                                     }
                                 }
-                                $this->api->removeNick($player);
+                                $this->plugin->removeNick($player, $nickname);
                             }else{
                                 $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
                                 if($player->getName() != $sender->getName()){
@@ -67,7 +67,7 @@ class Nick extends BaseCommand{
                                         $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nickname");
                                     }
                                 }
-                                $this->api->setNick($player, $nickname, true);
+                                $this->plugin->setNick($player, $nickname, true);
                             }
                         }
                     }

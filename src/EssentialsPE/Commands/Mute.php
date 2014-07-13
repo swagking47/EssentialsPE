@@ -12,7 +12,6 @@ class Mute extends BaseCommand{
     public function __construct(Loader $plugin){
         parent::__construct($plugin, "mute", "Prevent a player from chatting", "/mute <player>", ["silence"]);
         $this->setPermission("essentials.command.mute");
-        Server::getInstance()->getPluginManager()->registerEvents($this, $plugin);
     }
 
     public function execute(CommandSender $sender, $alias, array $args){
@@ -28,13 +27,13 @@ class Mute extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
         }else{
             if($player->hasPermission("essentials.command.mute.exempt")){
-                if(!$this->api->isMuted($player)){
+                if(!$this->plugin->isMuted($player)){
                     $sender->sendMessage(TextFormat::RED . "$args[0] can't be muted");
                     return false;
                 }
             }
-            $this->api->switchMute($player);
-            if(!$this->api->isMuted($player)){
+            $this->plugin->switchMute($player);
+            if(!$this->plugin->isMuted($player)){
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been unmuted!");
             }else{
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been muted!");

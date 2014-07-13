@@ -1,7 +1,6 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
@@ -34,13 +33,13 @@ class SignRegister extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . "Usage: /signregister warp <warp name>");
                     return false;
                 }
-                if(!$this->api->warpExist($args[0])){
+                if(!$this->plugin->warpExist($args[0])){
                     $sender->sendMessage(TextFormat::RED . "[Error] Warp $args[0] doesn't exist.");
-                }else{
-                    $GLOBALS["signregister"][$sender->getName()]["warp"] = $args[0];
-                    $GLOBALS["signregister"][$sender->getName()]["teleport"] = false;
-                    $sender->sendMessage(TextFormat::AQUA . "Done! Now tap the rign you want to register...");
+                    return false;
                 }
+                $this->plugin->enableWarpSignRegistration($sender, $args[0]);
+                $this->plugin->disableTPSignRegistration($sender);
+                $sender->sendMessage(TextFormat::AQUA . "Done! Now tap the sign you want to register...");
                 return true;
                 break;
             case "teleport":
@@ -53,11 +52,10 @@ class SignRegister extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . "[Error] Coordinates must be numbers!");
                     return false;
                 }
-                $GLOBALS["signregister"][$sender->getName()]["teleport"]["x"] = $args[1];
-                $GLOBALS["signregister"][$sender->getName()]["teleport"]["y"] = $args[2];
-                $GLOBALS["signregister"][$sender->getName()]["teleport"]["z"] = $args[3];
-                $GLOBALS["signregister"][$sender->getName()]["warp"] = false;
-            $sender->sendMessage(TextFormat::AQUA . "Done! Now tap the rign you want to register...");
+                $coords = new Vector3($args[1], $args[2], $args[3]);
+                $this->plugin->enableTPSignRegistration($sender, $coords);
+                $this->plugin->disableWarpSignRegistration($sender);
+                $sender->sendMessage(TextFormat::AQUA . "Done! Now tap the sign you want to register...");
                 return true;
                 break;
             default:
@@ -65,40 +63,5 @@ class SignRegister extends BaseCommand{
                 break;
         }
         return true;
-    }
-
-    /**
-     * @param PlayerInteractEvent $event
-     */
-    public function onBlockTap(PlayerInteractEvent $event){
-        $player = $event->getPlayer();
-        $block = $event->getBlock();
-
-        //Register a Warp/Teleport Sign
-        if($block instanceof Sign){
-            $text = $block->getText();
-            if($GLOBALS["signregister"][$player->getName()]["warp"] !== false || $GLOBALS["signregister"][$player->getName()]["teleport"] !== false){
-                //Register
-                if($GLOBALS["signregister"][$player->getName()]["warp"] !== false){
-                    $text[0] = TextFormat::LIGHT_PURPLE . "[Warp]";
-                    $text[1] = $GLOBALS["signregister"][$player->getName()]["warp"];
-                }elseif($GLOBALS["signregister"][$player->getName()]["teleport"] !== false){
-                    $text[0] = TextFormat::LIGHT_PURPLE . "[Teleport]";
-                    $text[1] = $GLOBALS["signregister"][$player->getName()]["teleport"]["x"];
-                    $text[2] = $GLOBALS["signregister"][$player->getName()]["teleport"]["y"];
-                    $text[3] = $GLOBALS["signregister"][$player->getName()]["teleport"]["z"];
-                }
-                $block->scheduleUpdate();
-            }else{
-                //Warp
-                if($text[0] == TextFormat::LIGHT_PURPLE . "[Warp]"){
-                    $player->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $text[1]");
-                    $this->api->tpWarp($player, $text[1]);
-                }elseif($text[0] == TextFormat::LIGHT_PURPLE . "[Teleport]"){
-                    $player->sendMessage(TextFormat::YELLOW . "Teleporting...");
-                    $player->teleport(new Vector3($text[1], $text[2], $text[3]));
-                }
-            }
-        }
     }
 } 

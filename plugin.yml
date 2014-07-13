@@ -66,6 +66,16 @@ permissions:
                             essentials.command.getpos.other:
                                 default: op
                                 description: "Get other player's position"
+                    essentials.command.god:
+                        default: op
+                        description: "Prevent a player to take any damage"
+                        children:
+                            essentials.command.god.use:
+                                default: op
+                                decription: "Prevent you to take damage"
+                            essentials.command.god.other:
+                                default: op
+                                decription: "Prevent other player to take damage"
                     essentials.command.heal:
                         default: op
                         description: "Heal yourself or other players"
@@ -102,6 +112,9 @@ permissions:
                             essentials.command.nick.other:
                                 default: op
                                 desctiption: "Change others name"
+                    essentials.command.pvp:
+                        default: true
+                        description: "Toggle PvP on/off"
                     essentials.command.realname:
                         default: op
                         description: "See a player's realname"
@@ -130,6 +143,9 @@ permissions:
                             essentials.command.signregister.teleport:
                                 default: true
                                 description: "Allow to use [Teleport] signs to teleport"
+                    essentials.command.top:
+                        default: op
+                        description: "Teleport to the highest block above you"
                     essentials.command.vanish:
                         default: op
                         description: "Hide yourself ot another player"

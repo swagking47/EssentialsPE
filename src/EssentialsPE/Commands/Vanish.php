@@ -1,7 +1,6 @@
 <?php
 namespace EssentialsPE\Commands;
 
-use EssentialsPE\API;
 use EssentialsPE\BaseCommand;
 use EssentialsPE\Loader;
 use pocketmine\command\CommandSender;
@@ -9,10 +8,8 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
 class Vanish extends BaseCommand{
-    public $vanished = [];
-
     public function __construct(Loader $plugin){
-        parent::__construct($plugin, "vanish", "Hide from other players!", "/vanish", ["v"]);
+        parent::__construct($plugin, "vanish", "Hide from other players!", "/vanish [player]", ["v"]);
         $this->setPermission("essentials.command.vanish.use");
     }
 
@@ -21,37 +18,43 @@ class Vanish extends BaseCommand{
             return false;
         }
         if(count($args) > 1){
-            $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
-        }else{
-            switch(count($args)){
-                case 0:
-                    if(!$sender instanceof Player){
-                        $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
-                    }else{
-                        $this->api->switchVanish($sender);
-                        if(!$this->api->isVanished($sender)){
-                            $sender->sendMessage(TextFormat::GRAY . "You're now visible");
-                        }else{
-                            $sender->sendMessage(TextFormat::GRAY . "You're now vanished!");
-                        }
-                    }
-                    break;
-                case 1:
-                    $player = $this->getPlayer($args[0]);
-                    if($player == false){
-                        $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
-                    }else{
-                        $this->api->switchVanish($player);
-                        if(!$this->api->isVanished($player)){
-                            $player->sendMessage(TextFormat::GRAY . "You're now visible");
-                            $sender->sendMessage(TextFormat::GRAY . "$args[0] is now visible");
-                        }else{
-                            $player->sendMessage(TextFormat::GRAY . "You're now vanished!");
-                            $sender->sendMessage(TextFormat::GRAY . "$args[0] is now vanished!");
-                        }
-                    }
-                    break;
+            if(!$sender instanceof Player){
+                $sender->sendMessage(TextFormat::RED . "Usage: /vanish <player>");
+            }else{
+                $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
             }
+            return false;
+        }
+        switch(count($args)){
+            case 0:
+                if(!$sender instanceof Player){
+                    $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
+                }else{
+                    $this->plugin->switchVanish($sender);
+                    if(!$this->plugin->isVanished($sender)){
+                        $sender->sendMessage(TextFormat::GRAY . "You're now visible");
+                    }else{
+                        $sender->sendMessage(TextFormat::GRAY . "You're now vanished!");
+                    }
+                }
+                return true;
+                break;
+            case 1:
+                $player = $this->getPlayer($args[0]);
+                if($player == false){
+                    $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
+                }else{
+                    $this->plugin->switchVanish($player);
+                    if(!$this->plugin->isVanished($player)){
+                        $player->sendMessage(TextFormat::GRAY . "You're now visible");
+                        $sender->sendMessage(TextFormat::GRAY . "$args[0] is now visible");
+                    }else{
+                        $player->sendMessage(TextFormat::GRAY . "You're now vanished!");
+                        $sender->sendMessage(TextFormat::GRAY . "$args[0] is now vanished!");
+                    }
+                }
+                return true;
+                break;
         }
         return true;
     }
