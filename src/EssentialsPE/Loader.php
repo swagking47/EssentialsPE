@@ -238,7 +238,7 @@ class Loader extends PluginBase implements Listener{
     //Nick
     public function setNick(Player $player, $nick, $save = true){
         $config = new Config(Loader::DIRECTORY . "Nicks.yml", Config::YAML);
-        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $nick, $player->getDisplayName()));
+        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $nick));
         $nick = $nick . TextFormat::RESET;
         $player->setNameTag($nick);
         $player->setDisplayName($nick);
@@ -251,7 +251,7 @@ class Loader extends PluginBase implements Listener{
 
     public function removeNick(Player $player, $nick, $save = true){
         $config = new Config(Loader::DIRECTORY . "Nicks.yml", Config::YAML);
-        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $nick, $player->getDisplayName()));
+        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $nick));
         $player->setNameTag($player->getName());
         $player->setDisplayName($player->getName());
         if($save === true){
