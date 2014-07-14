@@ -116,6 +116,20 @@ class Loader extends PluginBase{
      *
      */
 
+    public function getPlayer($player){
+        $r = "";
+        foreach($this->getServer()->getOnlinePlayers() as $p){
+            if(strtolower($p->getDisplayName()) == strtolower($player) || strtolower($p->getName()) == strtolower($player)){
+                $r = $this->getServer()->getPlayerExact($p->getName());
+            }
+        }
+        if($r == ""){
+            return false;
+        }else{
+            return $r;
+        }
+    }
+
     public function colorMessage($message, $player = false){
         if($player !== false && $player instanceof Player && !$player->hasPermission("essentials.colorchat")){
             return $message;
@@ -128,6 +142,7 @@ class Loader extends PluginBase{
         }
         return $message;
     }
+
     //Sessions
     private $sessions = [];
     private $mutes = [];

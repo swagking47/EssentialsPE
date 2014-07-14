@@ -8,7 +8,7 @@ use pocketmine\Server;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand, Listener{
     /** @var \EssentialsPE\Loader  */
-    public $plugin;
+    protected  $plugin;
 
     public function __construct(Loader $plugin, $name, $description = "", $usageMessage = null, array $aliases = []){
         parent::__construct($name, $description, $usageMessage, $aliases);
@@ -17,19 +17,5 @@ abstract class BaseCommand extends Command implements PluginIdentifiableCommand,
 
     public function getPlugin(){
         return $this->plugin;
-    }
-
-    public function getPlayer($player){
-        $r = "";
-        foreach(Server::getInstance()->getOnlinePlayers() as $p){
-            if(strtolower($p->getDisplayName()) == strtolower($player) || strtolower($p->getName()) == strtolower($player)){
-                $r = Server::getInstance()->getPlayerExact($p->getName());
-            }
-        }
-        if($r == ""){
-            return false;
-        }else{
-            return $r;
-        }
     }
 } 

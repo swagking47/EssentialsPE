@@ -48,7 +48,7 @@ class Warp extends BaseCommand{
                 return true;
                 break;
             case 2:
-                $player = $this->getPlayer($args[1]);
+                $player = $this->plugin->getPlayer($args[1]);
                 if($player === false){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{

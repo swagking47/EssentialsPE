@@ -22,7 +22,7 @@ class Mute extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
             return false;
         }
-        $player = $this->getPlayer($args[0]);
+        $player = $this->plugin->getPlayer($args[0]);
         if($player === false){
             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
         }else{

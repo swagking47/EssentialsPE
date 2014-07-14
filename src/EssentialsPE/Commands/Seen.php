@@ -20,7 +20,7 @@ class Seen extends BaseCommand{
         if(count($args) != 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
-            $player = $this->getPlayer($args[0]);
+            $player = $this->plugin->getPlayer($args[0]);
             if($player != false){
                 $sender->sendMessage(TextFormat::GREEN . $player->getDisplayName() . " is online!");
             }else{

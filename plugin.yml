@@ -8,7 +8,7 @@ website: https://github.com/LegendOfMCPE/EssentialsPE
 permissions:
     essentials:
         default: op
-        description: "All the Essentials' features"
+        description: "Allow to access to every EssentialsPE feature"
         children:
             essentials.ban.exempt:
                 default: op
@@ -18,7 +18,7 @@ permissions:
                 description: "Allow to chat using colors!"
             essentials.command:
                 default: op
-                description: "Allow player to use every command"
+                description: "Allow to access any EssentialsPE command"
                 children:
                     essentials.command.broadcast:
                         default: op

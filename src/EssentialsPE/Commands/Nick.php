@@ -44,7 +44,7 @@ class Nick extends BaseCommand{
                         $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                     }else{
                         $nickname = $args[0];
-                        $player = $this->getPlayer($args[1]);
+                        $player = $this->plugin->getPlayer($args[1]);
                         if($player == false){
                             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                         }else{
