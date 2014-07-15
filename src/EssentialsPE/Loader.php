@@ -178,11 +178,19 @@ class Loader extends PluginBase{
     }
 
     //God
+    public function setGodMode(Player $player, $state){
+        if(!is_bool($state)){
+            return false;
+        }
+        $this->setSession($player, "god", $state);
+        return true;
+    }
+
     public function switchGodMode(Player $player){
         if(!$this->isGod($player)){
-            $this->setSession($player, "god", true);
+            $this->setGodMode($player, true);
         }else{
-            $this->setSession($player, "god", false);
+            $this->setGodMode($player, false);
         }
     }
 
@@ -232,17 +240,25 @@ class Loader extends PluginBase{
     }
 
     //Mute
-    public function muteSessionCreate(Player $player){
+    protected function muteSessionCreate(Player $player){
         if(!isset($this->mutes[$player->getName()])){
             $this->mutes[$player->getName()] = false;
         }
     }
 
+    public function setMute(Player $player, $state){
+        if(!is_bool($state)){
+            return false;
+        }
+        $this->mutes[$player->getName()] = $state;
+        return true;
+    }
+
     public function switchMute(Player $player){
         if(!$this->isMuted($player)){
-            $this->mutes[$player->getName()] = true;
+            $this->setMute($player, true);
         }else{
-            $this->mutes[$player->getName()] = false;
+            $this->setMute($player, false);
         }
     }
 
@@ -319,11 +335,19 @@ class Loader extends PluginBase{
     }
 
     //Player vs Player (aka PvP)
+    public function setPvP(Player $player, $state){
+        if(!is_bool($state)){
+            return false;
+        }
+        $this->setSession($player, "pvp", $state);
+        return true;
+    }
+
     public function switchPvP(Player $player){
         if(!$this->isPvPEnabled($player)){
-            $this->setSession($player, "pvp", true);
+            $this->setPvP($player, true);
         }else{
-            $this->setSession($player, "pvp", false);
+            $this->setPvP($player, false);
         }
     }
 
@@ -434,14 +458,22 @@ class Loader extends PluginBase{
     }
 
     //Vanish
+    public function setVanish(Player $player, $state){
+        if(!is_bool($state)){
+            return false;
+        }
+        $this->setSession($player, "vanish", $state);
+        return true;
+    }
+
     public function switchVanish(Player $player){
         if(!$this->isVanished($player)){
-            $this->setSession($player, "vanish", true);
+            $this->setVanish($player, true);
             foreach($this->getServer()->getOnlinePlayers() as $p){
                 $p->hidePlayer($player);
             }
         }else{
-            $this->setSession($player, "vanish", false);
+            $this->setVanish($player, false);
             foreach($this->getServer()->getOnlinePlayers() as $p){
                 $p->showPlayer($player);
             }
