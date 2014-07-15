@@ -240,7 +240,7 @@ class Loader extends PluginBase{
     }
 
     //Mute
-    protected function muteSessionCreate(Player $player){
+    public function muteSessionCreate(Player $player){
         if(!isset($this->mutes[$player->getName()])){
             $this->mutes[$player->getName()] = false;
         }
