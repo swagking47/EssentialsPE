@@ -83,11 +83,11 @@ class EventHandler implements Listener{
         $player = $event->getPlayer();
         $message = $event->getMessage();
         if($this->plugin->isMuted($player)){
-            $event->setCancelled();
+            $event->setCancelled(true);
         }
         $message = $this->plugin->colorMessage($message, $player);
         if($message === false){
-            $event->setCancelled();
+            $event->setCancelled(true);
         }
         $event->setMessage($message);
     }
@@ -114,7 +114,7 @@ class EventHandler implements Listener{
     public function onEntityDamage(EntityDamageEvent $event){
         $entity = $event->getEntity();
         if($entity instanceof Player && $this->plugin->isGod($entity)){
-            $event->setCancelled();
+            $event->setCancelled(true);
         }
     }
 
@@ -127,10 +127,10 @@ class EventHandler implements Listener{
         if($victim instanceof Player && $issuer instanceof Player){
             if(!$this->plugin->isPvPEnabled($victim)){
                 $issuer->sendMessage(TextFormat::RED . $victim->getDisplayName() . " have PvP disabled!");
-                $event->setCancelled();
+                $event->setCancelled(true);
             }elseif(!$this->plugin->isPvPEnabled($issuer)){
                 $issuer->sendMessage(TextFormat::RED . "You have PvP disabled!");
-                $event->setCancelled();
+                $event->setCancelled(true);
             }
         }
     }
@@ -147,7 +147,7 @@ class EventHandler implements Listener{
         if($this->plugin->isPowerToolEnabled($player)){
             if($this->plugin->getPowerToolItemCommand($player, $item) !== false){
                 Server::getInstance()->dispatchCommand($player, $this->plugin->getPowerToolItemCommand($player, $item));
-                $event->setCancelled();
+                $event->setCancelled(true);
             }
         }
 
