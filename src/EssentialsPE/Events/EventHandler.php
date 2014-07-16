@@ -118,6 +118,9 @@ class EventHandler implements Listener{
         }
     }
 
+    /**
+     * @param EntityDamageByEntityEvent $event
+     */
     public function onEntityDamageByEntity(EntityDamageByEntityEvent $event){
         $victim = $event->getEntity();
         $issuer = $event->getDamager();
