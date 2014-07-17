@@ -25,7 +25,7 @@ class PowerToolToggle extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
             return false;
         }
-        $this->plugin->disablePowerTool($sender);
+        $this->getAPI()->disablePowerTool($sender);
         $sender->sendMessage(TextFormat::YELLOW . "PowerTool disabled from all the items!");
         return true;
     }

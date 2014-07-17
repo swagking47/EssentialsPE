@@ -30,8 +30,8 @@ class Vanish extends BaseCommand{
                 if(!$sender instanceof Player){
                     $sender->sendMessage(TextFormat::RED . "Usage: /vanish <player>");
                 }else{
-                    $this->plugin->switchVanish($sender);
-                    if(!$this->plugin->isVanished($sender)){
+                    $this->getAPI()->switchVanish($sender);
+                    if(!$this->getAPI()->isVanished($sender)){
                         $sender->sendMessage(TextFormat::GRAY . "You're now visible");
                     }else{
                         $sender->sendMessage(TextFormat::GRAY . "You're now vanished!");
@@ -40,12 +40,12 @@ class Vanish extends BaseCommand{
                 return true;
                 break;
             case 1:
-                $player = $this->plugin->getPlayer($args[0]);
+                $player = $this->getAPI()->getPlayer($args[0]);
                 if($player == false){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{
-                    $this->plugin->switchVanish($player);
-                    if(!$this->plugin->isVanished($player)){
+                    $this->getAPI()->switchVanish($player);
+                    if(!$this->getAPI()->isVanished($player)){
                         $player->sendMessage(TextFormat::GRAY . "You're now visible");
                         $sender->sendMessage(TextFormat::GRAY . "$args[0] is now visible");
                     }else{

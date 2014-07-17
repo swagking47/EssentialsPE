@@ -31,8 +31,8 @@ class God extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . "Usage: /god <player>");
                     return false;
                 }
-                $this->plugin->switchGodMode($sender);
-                if(!$this->plugin->isGod($sender)){
+                $this->getAPI()->switchGodMode($sender);
+                if(!$this->getAPI()->isGod($sender)){
                     $sender->sendMessage(TextFormat::AQUA . "God mode disabled");
                 }else{
                     $sender->sendMessage(TextFormat::AQUA . "God mode enabled!");
@@ -44,12 +44,12 @@ class God extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                     return false;
                 }
-                $player = $this->plugin->getPlayer($args[0]);
+                $player = $this->getAPI()->getPlayer($args[0]);
                 if($player === false){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found");
                 }else{
-                    $this->plugin->switchGodMode($player);
-                    if(!$this->plugin->isGod($player)){
+                    $this->getAPI()->switchGodMode($player);
+                    if(!$this->getAPI()->isGod($player)){
                         $sender->sendMessage(TextFormat::AQUA . "God mode disabled for $args[0]");
                         $player->sendMessage(TextFormat::AQUA . "God mode disabled");
                     }else{

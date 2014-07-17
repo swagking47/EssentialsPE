@@ -22,18 +22,18 @@ class Mute extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
             return false;
         }
-        $player = $this->plugin->getPlayer($args[0]);
+        $player = $this->getAPI()->getPlayer($args[0]);
         if($player === false){
             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
         }else{
             if($player->hasPermission("essentials.command.mute.exempt")){
-                if(!$this->plugin->isMuted($player)){
+                if(!$this->getAPI()->isMuted($player)){
                     $sender->sendMessage(TextFormat::RED . "$args[0] can't be muted");
                     return false;
                 }
             }
-            $this->plugin->switchMute($player);
-            if(!$this->plugin->isMuted($player)){
+            $this->getAPI()->switchMute($player);
+            if(!$this->getAPI()->isMuted($player)){
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been unmuted!");
             }else{
                 $sender->sendMessage(TextFormat::YELLOW . "$args[0] has been muted!");

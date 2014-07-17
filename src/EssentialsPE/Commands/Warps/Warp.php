@@ -39,25 +39,25 @@ class Warp extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . "Usage: /warp <name> <player>");
                     return false;
                 }
-                if(!$this->plugin->warpExist($args[0])){
+                if(!$this->getAPI()->warpExist($args[0])){
                     $sender->sendMessage(TextFormat::RED . "[Error] Unknown warp name.");
                 }else{
-                    $this->plugin->tpWarp($sender, $args[0]);
+                    $this->getAPI()->tpWarp($sender, $args[0]);
                     $sender->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $args[0]");
                 }
                 return true;
                 break;
             case 2:
-                $player = $this->plugin->getPlayer($args[1]);
+                $player = $this->getAPI()->getPlayer($args[1]);
                 if($player === false){
                     $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                 }else{
-                    if(!$this->plugin->warpExist($args[0])){
+                    if(!$this->getAPI()->warpExist($args[0])){
                         $sender->sendMessage(TextFormat::RED . "[Error] Unknown warp name.");
                     }else{
                         $sender->sendMessage(TextFormat::YELLOW . "Teleporting $args[1] to warp: $args[0]");
                         $player->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $args[0]");
-                        $this->plugin->tpWarp($player, $args[0]);
+                        $this->getAPI()->tpWarp($player, $args[0]);
                     }
                 }
                 return true;

@@ -37,10 +37,10 @@ use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
 class Loader extends PluginBase{
-    const DIRECTORY = "plugins/EssentialsPE/";
+    public $path;
 
     public function onEnable(){
-        @mkdir(Loader::DIRECTORY);
+        @mkdir($this->getDataFolder());
 	    $this->getLogger()->info(TextFormat::YELLOW . "Loading...");
         $this->getServer()->getPluginManager()->registerEvents(new EventHandler($this), $this);
         $this->registerCommands();
@@ -116,11 +116,16 @@ class Loader extends PluginBase{
      *
      */
 
+    /**
+     * @param string $player
+     * @return bool|Player|string
+     */
     public function getPlayer($player){
+        $player = strtolower($player);
         $r = "";
         foreach($this->getServer()->getOnlinePlayers() as $p){
-            if(strtolower($p->getDisplayName()) == strtolower($player) || strtolower($p->getName()) == strtolower($player)){
-                $r = $this->getServer()->getPlayerExact($p->getName());
+            if(strtolower($p->getDisplayName()) === $player || strtolower($p->getName()) === $player){
+                $r = $p;
             }
         }
         if($r == ""){
@@ -204,7 +209,7 @@ class Loader extends PluginBase{
 
     //Home
     public function setHome(Player $player, $home_name){
-        $config = new Config(Loader::DIRECTORY . $player->getName() . ".yml");
+        $config = new Config($this->getDataFolder() . $player->getName() . ".yml");
         if(!$config->exists($home_name)){
             if(!$player->hasPermission("essentials.home." . ($this->countHomes($player) + 1))){
                 return false;
@@ -222,7 +227,7 @@ class Loader extends PluginBase{
     }
 
     public function homeTp(Player $player, $home_name){
-        $config = new Config(Loader::DIRECTORY . $player->getName() . ".yml");
+        $config = new Config($this->getDataFolder() . $player->getName() . ".yml");
         if(!$config->exists($home_name)){
             return false;
         }
@@ -235,7 +240,7 @@ class Loader extends PluginBase{
     }
 
     private function countHomes(Player $player){
-        $config = new Config(Loader::DIRECTORY . $player->getName() . ".yml");
+        $config = new Config($this->getDataFolder() . $player->getName() . ".yml");
         return count($config->getAll());
     }
 
@@ -272,9 +277,8 @@ class Loader extends PluginBase{
 
     //Nick
     public function setNick(Player $player, $nick, $save = true){
-        $config = new Config(Loader::DIRECTORY . "Nicks.yml", Config::YAML);
-        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $nick));
-        $nick = $nick . TextFormat::RESET;
+        $config = new Config($this->getDataFolder() . "Nicks.yml", Config::YAML);
+        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $player->getName()));
         $player->setNameTag($nick);
         $player->setDisplayName($nick);
         if($save == true){
@@ -284,9 +288,9 @@ class Loader extends PluginBase{
         return true;
     }
 
-    public function removeNick(Player $player, $nick, $save = true){
-        $config = new Config(Loader::DIRECTORY . "Nicks.yml", Config::YAML);
-        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $nick));
+    public function removeNick(Player $player, $save = true){
+        $config = new Config($this->getDataFolder() . "Nicks.yml", Config::YAML);
+        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $player->getName()));
         $player->setNameTag($player->getName());
         $player->setDisplayName($player->getName());
         if($save === true){
@@ -296,7 +300,7 @@ class Loader extends PluginBase{
     }
 
     public function getNick(Player $player){
-        $config = new Config(Loader::DIRECTORY . "Nicks.yml", Config::YAML);
+        $config = new Config($this->getDataFolder() . "Nicks.yml", Config::YAML);
         if(!$config->exists($player->getName())){
             return false;
         }else{
@@ -410,7 +414,7 @@ class Loader extends PluginBase{
 
     //Warps
     public function setWarp(Player $player, $warp){
-        $config = new Config(Loader::DIRECTORY . "Warps.yml", Config::YAML);
+        $config = new Config($this->getDataFolder() . "Warps.yml", Config::YAML);
         $pos = array();
         $pos["x"] = $player->getX();
         $pos["y"] = $player->getY();
@@ -422,7 +426,7 @@ class Loader extends PluginBase{
     }
 
     public function removeWarp($warp){
-        $config = new Config(Loader::DIRECTORY . "Warps.yml", Config::YAML);
+        $config = new Config($this->getDataFolder() . "Warps.yml", Config::YAML);
         if(!$this->warpExist($warp)){
             return false;
         }else{
@@ -432,7 +436,7 @@ class Loader extends PluginBase{
     }
 
     public function warpExist($warp){
-        $config = new Config(Loader::DIRECTORY . "Warps.yml", Config::YAML);
+        $config = new Config($this->getDataFolder() . "Warps.yml", Config::YAML);
         if(!$config->exists($warp)){
             return false;
         }else{
@@ -441,7 +445,7 @@ class Loader extends PluginBase{
     }
 
     public function tpWarp(Player $player, $warp){
-        $config = new Config(Loader::DIRECTORY . "Warps.yml", Config::YAML);
+        $config = new Config($this->getDataFolder() . "Warps.yml", Config::YAML);
         if(!$config->exists($warp)){
             return false;
         }

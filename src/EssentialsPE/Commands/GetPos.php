@@ -37,7 +37,7 @@ class GetPos extends BaseCommand{
                 if(!$sender->hasPermission("essentials.command.getpos.other")){
                     $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                 }else{
-                    $player = $this->plugin->getPlayer($args[0]);
+                    $player = $this->getAPI()->getPlayer($args[0]);
                     if($player === false){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{

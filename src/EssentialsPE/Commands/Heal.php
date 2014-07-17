@@ -29,7 +29,7 @@ class Heal extends BaseCommand{
                 if(!$sender instanceof Player){
                     $sender->sendMessage(TextFormat::RED . "Usage: /heal <player>");
                 }else{
-                    $sender->setHealth($sender->getMaxHealth());
+                    $sender->heal($sender->getMaxHealth());
                     $sender->sendMessage(TextFormat::GREEN . "You have been healed!");
                 }
                 break;
@@ -37,11 +37,11 @@ class Heal extends BaseCommand{
                 if(!$sender->hasPermission("essentials.command.heal.other")){
                     $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                 }else{
-                    $player = $this->plugin->getPlayer($args[0]);
+                    $player = $this->getAPI()->getPlayer($args[0]);
                     if($player === false){
                         $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                     }else{
-                        $player->setHealth($player->getMaxHealth());
+                        $player->heal($player->getMaxHealth());
                         $player->sendMessage(TextFormat::GREEN . "You have been healed!");
                         $sender->sendMessage(TextFormat::GREEN . "$args[0] has been healed!");
                     }

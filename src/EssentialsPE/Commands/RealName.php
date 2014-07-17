@@ -19,7 +19,7 @@ class RealName extends BaseCommand{
         if(count($args) != 1){
             $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
         }else{
-            $player = $this->plugin->getPlayer($args[0]);
+            $player = $this->getAPI()->getPlayer($args[0]);
             if($player === false){
                 $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
             }else{

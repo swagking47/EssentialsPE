@@ -33,12 +33,12 @@ class SignRegister extends BaseCommand{
                     $sender->sendMessage(TextFormat::RED . "Usage: /signregister warp <warp name>");
                     return false;
                 }
-                if(!$this->plugin->warpExist($args[0])){
+                if(!$this->getAPI()->warpExist($args[0])){
                     $sender->sendMessage(TextFormat::RED . "[Error] Warp $args[0] doesn't exist.");
                     return false;
                 }
-                $this->plugin->enableWarpSignRegistration($sender, $args[0]);
-                $this->plugin->disableTPSignRegistration($sender);
+                $this->getAPI()->enableWarpSignRegistration($sender, $args[0]);
+                $this->getAPI()->disableTPSignRegistration($sender);
                 $sender->sendMessage(TextFormat::AQUA . "Done! Now tap the sign you want to register...");
                 return true;
                 break;
@@ -53,8 +53,8 @@ class SignRegister extends BaseCommand{
                     return false;
                 }
                 $coords = new Vector3($args[1], $args[2], $args[3]);
-                $this->plugin->enableTPSignRegistration($sender, $coords);
-                $this->plugin->disableWarpSignRegistration($sender);
+                $this->getAPI()->enableTPSignRegistration($sender, $coords);
+                $this->getAPI()->disableWarpSignRegistration($sender);
                 $sender->sendMessage(TextFormat::AQUA . "Done! Now tap the sign you want to register...");
                 return true;
                 break;

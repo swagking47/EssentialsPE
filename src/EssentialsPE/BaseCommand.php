@@ -8,14 +8,14 @@ use pocketmine\Server;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand, Listener{
     /** @var \EssentialsPE\Loader  */
-    public $plugin;
+    private $api;
 
     public function __construct(Loader $plugin, $name, $description = "", $usageMessage = null, array $aliases = []){
         parent::__construct($name, $description, $usageMessage, $aliases);
-        $this->plugin = $plugin;
+        $this->api = $plugin;
     }
 
-    public function getPlugin(){
-        return $this->plugin;
+    public function getAPI(){
+        return $this->api;
     }
 } 

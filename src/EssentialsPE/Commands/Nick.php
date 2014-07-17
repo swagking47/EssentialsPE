@@ -32,10 +32,10 @@ class Nick extends BaseCommand{
                     }else{
                         if($nickname == "off"){
                             $sender->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
-                            $this->plugin->removeNick($sender, true);
+                            $this->getAPI()->removeNick($sender, true);
                         }else{
                             $sender->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
-                            $this->plugin->setNick($sender, $nickname, true);
+                            $this->getAPI()->setNick($sender, $nickname, true);
                         }
                     }
                     break;
@@ -44,7 +44,7 @@ class Nick extends BaseCommand{
                         $sender->sendMessage(TextFormat::RED . $this->getPermissionMessage());
                     }else{
                         $nickname = $args[0];
-                        $player = $this->plugin->getPlayer($args[1]);
+                        $player = $this->getAPI()->getPlayer($args[1]);
                         if($player == false){
                             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                         }else{
@@ -57,7 +57,7 @@ class Nick extends BaseCommand{
                                         $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick has been disabled");
                                     }
                                 }
-                                $this->plugin->removeNick($player, $nickname);
+                                $this->getAPI()->removeNick($player, true);
                             }else{
                                 $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
                                 if($player->getName() != $sender->getName()){
@@ -67,7 +67,7 @@ class Nick extends BaseCommand{
                                         $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nickname");
                                     }
                                 }
-                                $this->plugin->setNick($player, $nickname, true);
+                                $this->getAPI()->setNick($player, $nickname, true);
                             }
                         }
                     }

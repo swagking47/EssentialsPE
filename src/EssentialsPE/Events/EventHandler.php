@@ -22,7 +22,7 @@ class EventHandler implements Listener{
     public $plugin;
 
     public function __construct(Loader $plugin){
-        $this->plugin = $plugin;
+        $this->getAPI() = $plugin;
     }
 
     /**
@@ -36,8 +36,8 @@ class EventHandler implements Listener{
             $player->setBanned(false);
         }
         //Nick and NameTag set:
-        if($this->plugin->getNick($player) != false){
-            $this->plugin->setNick($player, $this->plugin->getNick($player), false);
+        if($this->getAPI()->getNick($player) != false){
+            $this->getAPI()->setNick($player, $this->getAPI()->getNick($player), false);
         }
     }
 
@@ -48,13 +48,13 @@ class EventHandler implements Listener{
         $player = $event->getPlayer();
 
         //Session configure:
-        $this->plugin->muteSessionCreate($player);
-        $this->plugin->createSession($player);
+        $this->getAPI()->muteSessionCreate($player);
+        $this->getAPI()->createSession($player);
         //Join Message (nick):
         $event->setJoinMessage($player->getDisplayName() . " joined the game");
         //Hide vanished players
         foreach(Server::getInstance()->getOnlinePlayers() as $p){
-            if($this->plugin->isVanished($p)){
+            if($this->getAPI()->isVanished($p)){
                 $player->hidePlayer($p);
             }
         }
@@ -69,9 +69,9 @@ class EventHandler implements Listener{
         //Quit message (nick):
         $event->setQuitMessage($player->getDisplayName() . " left the game");
         //Nick and NameTag restore:
-        $this->plugin->setNick($player, $player->getName(), false);
+        $this->getAPI()->setNick($player, $player->getName(), false);
         //Session destroy:
-        $this->plugin->removeSession($player);
+        $this->getAPI()->removeSession($player);
     }
 
     /**
@@ -82,10 +82,10 @@ class EventHandler implements Listener{
     public function onPlayerChat(PlayerChatEvent $event){
         $player = $event->getPlayer();
         $message = $event->getMessage();
-        if($this->plugin->isMuted($player)){
+        if($this->getAPI()->isMuted($player)){
             $event->setCancelled(true);
         }
-        $message = $this->plugin->colorMessage($message, $player);
+        $message = $this->getAPI()->colorMessage($message, $player);
         if($message === false){
             $event->setCancelled(true);
         }
@@ -102,7 +102,7 @@ class EventHandler implements Listener{
         $origin = $event->getOrigin();
         $target = $event->getTarget();
         if($entity instanceof Player){
-            $this->plugin->switchLevelVanish($entity, $origin, $target);
+            $this->getAPI()->switchLevelVanish($entity, $origin, $target);
         }
     }
 
@@ -113,7 +113,7 @@ class EventHandler implements Listener{
      */
     public function onEntityDamage(EntityDamageEvent $event){
         $entity = $event->getEntity();
-        if($entity instanceof Player && $this->plugin->isGod($entity)){
+        if($entity instanceof Player && $this->getAPI()->isGod($entity)){
             $event->setCancelled(true);
         }
     }
@@ -125,10 +125,10 @@ class EventHandler implements Listener{
         $victim = $event->getEntity();
         $issuer = $event->getDamager();
         if($victim instanceof Player && $issuer instanceof Player){
-            if(!$this->plugin->isPvPEnabled($victim)){
+            if(!$this->getAPI()->isPvPEnabled($victim)){
                 $issuer->sendMessage(TextFormat::RED . $victim->getDisplayName() . " have PvP disabled!");
                 $event->setCancelled(true);
-            }elseif(!$this->plugin->isPvPEnabled($issuer)){
+            }elseif(!$this->getAPI()->isPvPEnabled($issuer)){
                 $issuer->sendMessage(TextFormat::RED . "You have PvP disabled!");
                 $event->setCancelled(true);
             }
@@ -144,9 +144,9 @@ class EventHandler implements Listener{
         $item = $event->getItem();
 
         //PowerTool
-        if($this->plugin->isPowerToolEnabled($player)){
-            if($this->plugin->getPowerToolItemCommand($player, $item) !== false){
-                Server::getInstance()->dispatchCommand($player, $this->plugin->getPowerToolItemCommand($player, $item));
+        if($this->getAPI()->isPowerToolEnabled($player)){
+            if($this->getAPI()->getPowerToolItemCommand($player, $item) !== false){
+                Server::getInstance()->dispatchCommand($player, $this->getAPI()->getPowerToolItemCommand($player, $item));
                 $event->setCancelled(true);
             }
         }
@@ -154,24 +154,24 @@ class EventHandler implements Listener{
         //SignRegister
         if($block instanceof Sign){
             $text = $block->getText();
-            if(!$this->plugin->getSignRegisterState($player)){
+            if(!$this->getAPI()->getSignRegisterState($player)){
                 //Teleports...
                 if($text[0] == TextFormat::LIGHT_PURPLE . "[Warp]"){ //Warp
                     $player->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $text[1]");
-                    $this->plugin->tpWarp($player, $text[1]);
+                    $this->getAPI()->tpWarp($player, $text[1]);
                 }elseif($text[0] == TextFormat::LIGHT_PURPLE . "[Teleport]"){ //Teleport
                     $player->sendMessage(TextFormat::YELLOW . "Teleporting...");
                     $player->teleport(new Vector3($text[1], $text[2], $text[3]));
                 }
             }else{
                 //Register
-                if($this->plugin->getSignRegisterState($player) == "warp"){
+                if($this->getAPI()->getSignRegisterState($player) == "warp"){
                     $text[0] = TextFormat::LIGHT_PURPLE . "[Warp]";
-                    $text[1] = $this->plugin->getWarpSignRegister($player);
-                    $this->plugin->disableWarpSignRegistration($player);
-                }elseif($this->plugin->getSignRegisterState($player) == "teleport"){
+                    $text[1] = $this->getAPI()->getWarpSignRegister($player);
+                    $this->getAPI()->disableWarpSignRegistration($player);
+                }elseif($this->getAPI()->getSignRegisterState($player) == "teleport"){
                     $text[0] = TextFormat::LIGHT_PURPLE . "[Teleport]";
-                    $coords = $this->plugin->getTPSignRegister($player);
+                    $coords = $this->getAPI()->getTPSignRegister($player);
                     $text[1] = $coords->getX();
                     $text[2] = $coords->getY();
                     $text[3] = $coords->getZ();
