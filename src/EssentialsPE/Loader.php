@@ -75,7 +75,7 @@ class Loader extends PluginBase{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Essentials($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Extinguish($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new GetPos($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new God($this)); //Experimental
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new God($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Heal($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new KickAll($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new More($this));
@@ -83,7 +83,7 @@ class Loader extends PluginBase{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Nick($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new PowerTool($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new PowerToolToggle($this));
-        $this->getServer()->getCommandMap()->register($fallbackPrefix, new PvP($this)); //Experimental
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new PvP($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new RealName($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Repair($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Seen($this));
@@ -278,21 +278,29 @@ class Loader extends PluginBase{
     //Nick
     public function setNick(Player $player, $nick, $save = true){
         $config = new Config($this->getDataFolder() . "Nicks.yml", Config::YAML);
-        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $player->getName()));
+        $this->getServer()->getPluginManager()->callEvent($event = new PlayerNickChangeEvent($this, $player, $nick));
+        if($event->isCancelled()){
+            return;
+        }
+        $nick = $event->getNewNick();
         $player->setNameTag($nick);
         $player->setDisplayName($nick);
+        $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nick");
         if($save == true){
             $config->set($player->getName(), $nick);
             $config->save();
         }
-        return true;
     }
 
     public function removeNick(Player $player, $save = true){
         $config = new Config($this->getDataFolder() . "Nicks.yml", Config::YAML);
-        //$this->getServer()->getPluginManager()->callEvent(new PlayerNickChangeEvent($this, $player, $player->getName()));
+        $this->getServer()->getPluginManager()->callEvent($event = new PlayerNickChangeEvent($this, $player, $player->getName()));
+        if($event->isCancelled()){
+            return;
+        }
         $player->setNameTag($player->getName());
         $player->setDisplayName($player->getName());
+        $player->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
         if($save === true){
             $config->remove($player->getName());
             $config->save();

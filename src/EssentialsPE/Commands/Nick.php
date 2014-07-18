@@ -31,10 +31,8 @@ class Nick extends BaseCommand{
                         $sender->sendMessage(TextFormat::RED . "Usage: /nick <new nick|off> <player>");
                     }else{
                         if($nickname == "off"){
-                            $sender->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
                             $this->getAPI()->removeNick($sender, true);
                         }else{
-                            $sender->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
                             $this->getAPI()->setNick($sender, $nickname, true);
                         }
                     }
@@ -49,7 +47,6 @@ class Nick extends BaseCommand{
                             $sender->sendMessage(TextFormat::RED . "[Error] Player not found.");
                         }else{
                             if($nickname == "off"){
-                                $player->sendMessage(TextFormat::YELLOW . "Your nick has been disabled");
                                 if($player->getName() != $sender->getName()){
                                     if(substr($player->getDisplayName(), -1, 1) == "s"){
                                         $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick has been disabled");
@@ -59,12 +56,11 @@ class Nick extends BaseCommand{
                                 }
                                 $this->getAPI()->removeNick($player, true);
                             }else{
-                                $player->sendMessage(TextFormat::YELLOW . "Your nick is now $nickname");
                                 if($player->getName() != $sender->getName()){
                                     if(substr($player->getDisplayName(), -1, 1) == "s"){
-                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick is now $nickname");
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]' nick has been changed");
                                     }else{
-                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick is now $nickname");
+                                        $sender->sendMessage(TextFormat::GREEN . "$args[1]'s nick has been changed");
                                     }
                                 }
                                 $this->getAPI()->setNick($player, $nickname, true);
