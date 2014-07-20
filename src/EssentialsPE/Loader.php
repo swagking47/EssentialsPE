@@ -287,7 +287,8 @@ class Loader extends PluginBase{
         $config = new Config($this->getDataFolder() . $player->getName() . ".yml");
         if(!$config->exists($home_name)){
             if(!$player->hasPermission("essentials.home." . ($this->countHomes($player) + 1))){
-                return false;
+                $player->sendMessage("You may only have ".$this->countHomes($player)." homes.");
+                return true;
             }
             $pos = array();
             $pos["x"] = $player->getX();
@@ -309,11 +310,11 @@ class Loader extends PluginBase{
      * @return bool
      */
     public function homeTp(Player $player, $home_name){
-        $config = new Config($this->getDataFolder() . $player->getName() . ".yml");
-        if(!$config->exists($home_name)){
+        $config = new Config($this->getDataFolder() . strtolower($player->getName()) . ".yml");
+        if(!$config->exists(strtolower($home_name))){
             return false;
         }
-        $home = $config->get($home_name);
+        $home = $config->get(strtolower($home_name));
         if($player->getLevel()->getName() != $home["level"]){
             $player->setLevel($home["level"]);
         }
