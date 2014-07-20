@@ -86,23 +86,6 @@ permissions:
                             essentials.command.heal.other:
                                 default: op
                                 description: "Heal other players"
-                    essentials.command.home:
-                        default: true
-                        description: "Teleports you to you or another player's home"
-                        children:
-                            essentials.command.home.use:
-                                default: true
-                                description: "Teleports you to your home"
-                            essentials.command.home.other:
-                                default: op
-                                description: "Teleports you to another player's home"
-                    essentials.command.sethome:
-                        default: true
-                        description: "Sets your home"
-                        children:
-                            essentials.command.sethome.use:
-                                default: true
-                                description: "Sets your home"
                     essentials.command.item:
                         default: op
                         description: "Gives yourself an item"
