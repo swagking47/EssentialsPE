@@ -38,7 +38,7 @@ permissions:
                         description: "Clear a player inventory"
                         children:
                             essentials.command.clearinventory.use:
-                                default: op
+                                default: true
                                 description: "Clear your inventory"
                             essentials.command.clearinventory.other:
                                 defult: op
@@ -161,14 +161,14 @@ permissions:
                         description: "Teleport to the highest block above you"
                     essentials.command.vanish:
                         default: op
-                        description: "Hide yourself ot another player"
+                        description: "Hide yourself or another player"
                         children:
                             essentials.command.vanish.use:
                                 default: op
                                 description: "Hide yourself from other players"
                             essentials.command.vanish.other:
                                 default: op
-                                description: "Hide another player"
+                                description: "Hide other players"
                     essentials.command.warp:
                         default: op
                         description: "Warp managment permissions"
@@ -178,7 +178,7 @@ permissions:
                                 description: "Teleport to a warp!"
                             essentials.command.warp.other:
                                 default: op
-                                description: "Teleport other player to a warp"
+                                description: "Teleport other players to a warp"
                             essentials.command.warp.remove:
                                 default: op
                                 description: "Close a warp"
