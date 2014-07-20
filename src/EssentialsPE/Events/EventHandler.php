@@ -151,35 +151,6 @@ class EventHandler implements Listener{
                 $event->setCancelled(true);
             }
         }
-
-        //SignRegister
-        if($block instanceof Sign){
-            $text = $block->getText();
-            if(!$this->api->getSignRegisterState($player)){
-                //Teleports...
-                if($text[0] == TextFormat::LIGHT_PURPLE . "[Warp]"){ //Warp
-                    $player->sendMessage(TextFormat::YELLOW . "Teleporting to warp: $text[1]");
-                    $this->api->tpWarp($player, $text[1]);
-                }elseif($text[0] == TextFormat::LIGHT_PURPLE . "[Teleport]"){ //Teleport
-                    $player->sendMessage(TextFormat::YELLOW . "Teleporting...");
-                    $player->teleport(new Vector3($text[1], $text[2], $text[3]));
-                }
-            }else{
-                //Register
-                if($this->api->getSignRegisterState($player) == "warp"){
-                    $text[0] = TextFormat::LIGHT_PURPLE . "[Warp]";
-                    $text[1] = $this->api->getWarpSignRegister($player);
-                    $this->api->disableWarpSignRegistration($player);
-                }elseif($this->api->getSignRegisterState($player) == "teleport"){
-                    $text[0] = TextFormat::LIGHT_PURPLE . "[Teleport]";
-                    $coords = $this->api->getTPSignRegister($player);
-                    $text[1] = $coords->getX();
-                    $text[2] = $coords->getY();
-                    $text[3] = $coords->getZ();
-                }
-                $block->scheduleUpdate();
-            }
-        }
     }
 
     /**
@@ -196,15 +167,6 @@ class EventHandler implements Listener{
                 Server::getInstance()->dispatchCommand($player, $this->api->getPowerToolItemCommand($player, $item));
                 $event->setCancelled(true);
             }
-        }
-    }
-
-    /**
-     * @param PlayerNickChangeEvent $event
-     */
-    public function onNickChange(PlayerNickChangeEvent $event){
-        if($event->getNewNick() == "test"){
-            $event->setNick("Wooooo it works!");
         }
     }
 }

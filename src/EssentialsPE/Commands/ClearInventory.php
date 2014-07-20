@@ -19,7 +19,7 @@ class ClearInventory extends BaseCommand{
         }
         if(count($args) > 1){
             if(!$sender instanceof Player){
-                $sender->sendMessage(TextFormat::RED . "/clearinventory <player>");
+                $sender->sendMessage(TextFormat::RED . "Usage: /clearinventory <player>");
             }else{
                 $sender->sendMessage(TextFormat::RED . "Usage: " . $this->getUsage());
             }
@@ -27,7 +27,7 @@ class ClearInventory extends BaseCommand{
         switch(count($args)){
             case 0:
                 if(!$sender instanceof Player){
-                    $sender->sendMessage(TextFormat::RED . "/clearinventory <player>");
+                    $sender->sendMessage(TextFormat::RED . "Usage: /clearinventory <player>");
                 }else{
                     $sender->getInventory()->clearAll();
                     $sender->sendMessage(TextFormat::AQUA . "Your inventory was cleared");

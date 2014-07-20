@@ -86,6 +86,9 @@ permissions:
                             essentials.command.heal.other:
                                 default: op
                                 description: "Heal other players"
+                    essentials.command.item:
+                        default: op
+                        description: "Gives yourself an item"
                     essentials.command.kickall:
                         default: op
                         description: "Kick all the online players except the sender"
@@ -133,22 +136,9 @@ permissions:
                     essentials.command.setspawn:
                         default: op
                         description: "Change your server's general spawn"
-                    essentials.command.signregister:
+                    essentials.command.tempban:
                         default: op
-                        description: "Signs interaction!"
-                        children:
-                            essentials.command.signregister.register:
-                                default: op
-                                description: "Allow to create an interactive sign"
-                            essentials.command.signregister.unregister:
-                                default: op
-                                description: "Allow to break (unregister) an interactive sign"
-                            essentials.command.signregister.warp:
-                                default: true
-                                description: "Allow to use [Warp] signs to teleport"
-                            essentials.command.signregister.teleport:
-                                default: true
-                                description: "Allow to use [Teleport] signs to teleport"
+                        description: "Temporary bans a player"
                     essentials.command.top:
                         default: op
                         description: "Teleport to the highest block above you"

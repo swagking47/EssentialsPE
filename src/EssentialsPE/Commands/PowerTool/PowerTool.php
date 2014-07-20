@@ -27,6 +27,10 @@ class PowerTool extends BaseCommand{
             $sender->sendMessage(TextFormat::RED . "You can't assign a command to an empty hand.");
             return false;
         }
+        if($args[0] == "pt" || $args[0] == "ptt" || $args[0] == "powertool" || $args[0] == "ptt"){
+            $sender->sendMessage(TextFormat::RED . "This command can't be assigned");
+            return false;
+        }
         if(count($args) == 0){
             $this->getAPI()->disablePowerToolItem($sender, $item);
             $sender->sendMessage(TextFormat::GREEN . "Command removed from this item.");
