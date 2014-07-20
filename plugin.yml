@@ -38,7 +38,7 @@ permissions:
                         description: "Clear a player inventory"
                         children:
                             essentials.command.clearinventory.use:
-                                default: true
+                                default: op
                                 description: "Clear your inventory"
                             essentials.command.clearinventory.other:
                                 defult: op
