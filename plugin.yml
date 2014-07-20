@@ -174,7 +174,7 @@ permissions:
                         description: "Warp managment permissions"
                         children:
                             essentials.command.warp.use:
-                                default: op
+                                default: true
                                 description: "Teleport to a warp!"
                             essentials.command.warp.other:
                                 default: op
