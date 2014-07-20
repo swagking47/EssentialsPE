@@ -87,8 +87,8 @@ permissions:
                                 default: op
                                 description: "Heal other players"
                     essentials.command.home:
-                        default: true
-                        description: "Teleports you to you or another player's home"
+                        default: op
+                        description: "Teleports you to your or another player's home"
                         children:
                             essentials.command.home.use:
                                 default: true
@@ -133,13 +133,13 @@ permissions:
                                 default: op
                                 desctiption: "Change others name"
                     essentials.command.powertool:
-                        default: true
+                        default: op
                         description: "Allow to toggle and use PowerTool"
                     essentials.command.powertooltoggle:
                         default: op
                         description: "Allow to disable PowerTool from all the items (of a player)"
                     essentials.command.pvp:
-                        default: true
+                        default: op
                         description: "Toggle PvP on/off"
                     essentials.command.realname:
                         default: op
