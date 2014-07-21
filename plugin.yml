@@ -65,7 +65,7 @@ permissions:
                         children:
                             essentials.command.getpos.use:
                                 default: true
-                                description: "Get your curren position"
+                                description: "Get your current position"
                             essentials.command.getpos.other:
                                 default: op
                                 description: "Get other player's position"
