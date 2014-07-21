@@ -4,12 +4,14 @@ namespace EssentialsPE;
 use EssentialsPE\Commands\Broadcast; //Use API
 use EssentialsPE\Commands\Burn;
 use EssentialsPE\Commands\ClearInventory;
+use EssentialsPE\Commands\Compass;
 use EssentialsPE\Commands\Essentials;
 use EssentialsPE\Commands\Extinguish;
 use EssentialsPE\Commands\GetPos;
 use EssentialsPE\Commands\God; //Use API
 use EssentialsPE\Commands\Heal;
 use EssentialsPE\Commands\Item as ItemCommand;
+use EssentialsPE\Commands\Jump;
 use EssentialsPE\Commands\KickAll;
 use EssentialsPE\Commands\More;
 use EssentialsPE\Commands\Mute; //Use API
@@ -73,12 +75,14 @@ class Loader extends PluginBase{
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Broadcast($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Burn($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new ClearInventory($this));
+        $this->getServer()->getCommandMap()->register($fallbackPrefix, new Compass($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Essentials($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Extinguish($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new GetPos($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new God($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Heal($this));
         //$this->getServer()->getCommandMap()->register($fallbackPrefix, new ItemCommand($this)); //TODO :D
+        //$this->getServer()->getCommandMap()->register($fallbackPrefix, new Jump($this)); //TODO :D
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new KickAll($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new More($this));
         $this->getServer()->getCommandMap()->register($fallbackPrefix, new Mute($this));
@@ -124,17 +128,13 @@ class Loader extends PluginBase{
      */
     public function getPlayer($player){
         $player = strtolower($player);
-        $r = "";
+        $r = false;
         foreach($this->getServer()->getOnlinePlayers() as $p){
             if(strtolower($p->getDisplayName()) === $player || strtolower($p->getName()) === $player){
                 $r = $p;
             }
         }
-        if($r == ""){
-            return false;
-        }else{
-            return $r;
-        }
+        return $r;
     }
 
     public function colorMessage($message, $player = null){
@@ -492,7 +492,7 @@ class Loader extends PluginBase{
      * @param $command_line
      */
     public function setPowerToolItemCommand(Player $player, Item $item, $command_line){
-        if($item == Item::AIR){
+        if($item === 0){
             return;
         }
         $this->sessions[$player->getName()]["powertool"][$item->getID()] = $command_line;

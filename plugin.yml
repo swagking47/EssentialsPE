@@ -43,6 +43,9 @@ permissions:
                             essentials.command.clearinventory.other:
                                 defult: op
                                 description: "Clear other's inventory"
+                    essentialc.command.compass:
+                        default: true
+                        description: "Display your current bearing direction"
                     essentials.command.essentials:
                         default: op
                         description: "See the current Essentials version"
@@ -106,6 +109,9 @@ permissions:
                     essentials.command.item:
                         default: op
                         description: "Gives yourself an item"
+                    essentials.command.jump:
+                        default: op
+                        description: "Teleport you to the block you're looking at"
                     essentials.command.kickall:
                         default: op
                         description: "Kick all the online players except the sender"
