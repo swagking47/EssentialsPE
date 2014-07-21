@@ -35,7 +35,7 @@ commands:
         aliases: ["coords", "position", "whereami", "getlocation", "getloc"]
     heal:
         description: "Heal a player"
-        usage: /heal [player]
+        usage: /heal [player] [amount]
         permission: essentials.command.heal.use
     kickall:
         description: "Kick all the players"
